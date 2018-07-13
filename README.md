@@ -108,9 +108,9 @@ Create React App 分为两个包:
 
 你不需要更新 `create-react-app` 本身: 他把构建步骤委托给了 `react-scripts`.
 
-如果要更新 `react-scripts`, 请先查看 [changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md) , 然后再 ```npm install``` 进行更新, 主要防止有 breaking changes.
+如果要更新 `react-scripts`, 请先查看 [changelog](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md) , 然后再 ```npm install``` 进行更新, 主要防止有 breaking changes.
 
-## 工程目录结构
+## 工程目录结构
 
 ```
 my-app/
@@ -142,7 +142,7 @@ my-app/
 
 ### `npm start`
 
-测试环境.<br>
+测试环境.<br>
 自动在浏览器中打开 [http://localhost:3000](http://localhost:3000) 进行预览;
 
 如果有修改, 页面会自动刷新.<br>
@@ -194,7 +194,7 @@ Also note that using some newer syntax features like `for...of` or `[...nonArray
 
 Note: 
 >需要 `react-scripts@0.2.0` 及以上版本.<br>
->npm 3 及以上.
+>npm 3 及以上.
 
 包括 Sublime Text, Atom, 和 Visual Studio Code 等很多编辑器都有 ESLint 插件.
 
@@ -208,19 +208,19 @@ Note:
 
 现在你的编辑器上就能显示linting warnings 了.
 
-需要注意的是 `.eslintrc`  只会影响编辑器, 不会影响 terminal 和 in-browser 的 lint 输出. 因为 Create React App 只提供了常见错误的简单规则.
+需要注意的是 `.eslintrc`  只会影响编辑器, 不会影响 terminal 和 in-browser 的 lint 输出. 因为 Create React App 只提供了常见错误的简单规则.
 
 如果想在项目中强制执行代码规范, 应该用 [Prettier](https://github.com/jlongster/prettier) .
 
 ## Debugging
 
-**目前支持 [Visual Studio Code](https://code.visualstudio.com) 和 [WebStorm](https://www.jetbrains.com/webstorm/).**
+**目前支持 [Visual Studio Code](https://code.visualstudio.com) 和 [WebStorm](https://www.jetbrains.com/webstorm/).**
 
 ### Visual Studio Code
 
 需 [VS Code](https://code.visualstudio.com) 最新版, 并安装 [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) 插件.
 
-在 `launch.json` 文件中添加如下内容, 然后放到project根目录下的 `.vscode` 里.
+在 `launch.json` 文件中添加如下内容, 然后放到project根目录下的 `.vscode` 里.
 
 ```json
 {
@@ -239,7 +239,7 @@ Note:
 ```
 >Note: 如果你通过 [HOST or PORT environment variables](#advanced-configuration) 修改了host或者port, 记得把上面的url也同步改掉.
 
-`npm start` 运行APP, 然后在VS Code 中 按 `F5` 或者点击绿色的 debug 按钮开始debug. 
+`npm start` 运行APP, 然后在VS Code 中 按 `F5` 或者点击绿色的 debug 按钮开始debug. 
 
 如果 VS Code Debugging 遇到问题, 请参考 [troubleshooting guide](https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting).
 
@@ -247,19 +247,19 @@ Note:
 
 [WebStorm](https://www.jetbrains.com/webstorm/), 并且安装 [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension.
 
-在 WebStorm 中点击 `Run` 旁边的下拉菜单, 然后选中 `Edit Configurations...` 打开对话框. 然后点击左上角 `+` 选中 `JavaScript Debug`. 最后粘贴 `http://localhost:3000` 到 URL 里, 点击 OK 保存配置.
+在 WebStorm 中点击 `Run` 旁边的下拉菜单, 然后选中 `Edit Configurations...` 打开对话框. 然后点击左上角 `+` 选中 `JavaScript Debug`. 最后粘贴 `http://localhost:3000` 到 URL 里, 点击 OK 保存配置.
 
 >Note: 如果你通过 [HOST or PORT environment variables](#advanced-configuration) 修改了host或者port, 记得把上面的url也同步改掉.
 
-`npm start` 运行APP, 然后按 `^D` on macOS 或者 `F9` on Windows 和 Linux 或者点击绿色的 debug 按钮开始debug. 
+`npm start` 运行APP, 然后按 `^D` on macOS 或者 `F9` on Windows 和 Linux 或者点击绿色的 debug 按钮开始debug. 
 
-当然, 在 IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, 和 RubyMine 中的调试方式都与以上相同. 
+当然, 在 IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, 和 RubyMine 中的调试方式都与以上相同. 
 
 ## 自动格式化代码
 
 Prettier 是个可选的代码格式化工具, 同时支持 JavaScript, CSS 和 JSON. 具体详见 [Prettier's GitHub](https://github.com/prettier/prettier) 和 [page to see it in action](https://prettier.github.io/prettier/).
 
-如果要在 git commit 代码的时候进行代码自动格式化, 则需要安装以下依赖:
+如果要在 git commit 代码的时候进行代码自动格式化, 则需要安装以下依赖:
 
 ```sh
 npm install --save husky lint-staged prettier
