@@ -146,7 +146,7 @@ my-app/
 自动在浏览器中打开 [http://localhost:3000](http://localhost:3000) 进行预览;
 
 如果有修改, 页面会自动刷新.<br>
-控制台可以查看 lint errors.
+控制台可以查看 lint errors.
 
 ### `npm test`
 
@@ -239,7 +239,7 @@ Note:
 ```
 >Note: 如果你通过 [HOST or PORT environment variables](#advanced-configuration) 修改了host或者port, 记得把上面的url也同步改掉.
 
-`npm start` 运行APP, 然后在VS Code 中 按 `F5` 或者点击绿色的 debug 按钮开始debug. 
+`npm start` 运行APP, 然后在VS Code 中 按 `F5` 或者点击绿色的 debug 按钮开始debug. 
 
 如果 VS Code Debugging 遇到问题, 请参考 [troubleshooting guide](https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting).
 
@@ -272,7 +272,7 @@ yarn add husky lint-staged prettier
 ```
 
 * `husky` 如同使用 npm scripts 一样, 更容易的使用 githooks.
-* `lint-staged` 在 git staged files 上执行脚本. [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
+* `lint-staged` 在 git staged files 上执行脚本. [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
 * `prettier` JavaScript formatter, 在commit之前运行.
 
 修改 `package.json`.
@@ -299,9 +299,9 @@ yarn add husky lint-staged prettier
 ```
 
 现在, 当你commit代码时, Prettier 就会自动格式化你改动的文件了.<br> 
-当然, 运行 `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,json,css}"` 可以格式化整个project
+当然, 运行 `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,json,css}"` 可以格式化整个project
 
-最后, 如果你想在你喜欢的编辑器中集成 Prettier, 可以参见 Prettier GitHub [Editor Integration](https://prettier.io/docs/en/editors.html).
+最后, 如果你想在你喜欢的编辑器中集成 Prettier, 可以参见 Prettier GitHub [Editor Integration](https://prettier.io/docs/en/editors.html).
 
 ## 修改页面标题 `<title>`
 
@@ -325,11 +325,11 @@ yarn add husky lint-staged prettier
 
 ## 代码拆分 (Code Splitting)
 
-区别于把整个APP下载下来, code splitting 可以将你的代码拆分成小块, 实现按需加载.
+区别于把整个APP下载下来, code splitting 可以将你的代码拆分成小块, 实现按需加载.
 
-Code Splitting 通过 [dynamic `import()`](http://2ality.com/2017/01/import-operator.html#loading-code-on-demand) 来实现. 动态 ```import()``` 是 stage 3 的[提案](https://github.com/tc39/proposal-dynamic-import) . `import()` function-like form takes the module name as an argument and returns a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which always resolves to the namespace object of the module.
+Code Splitting 通过 [dynamic `import()`](http://2ality.com/2017/01/import-operator.html#loading-code-on-demand) 来实现. 动态 ```import()``` 是 stage 3 的[提案](https://github.com/tc39/proposal-dynamic-import) . `import()` function-like form takes the module name as an argument and returns a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which always resolves to the namespace object of the module.
 
-举个栗子:
+举个栗子:
 
 ### `moduleA.js`
 
@@ -366,7 +366,7 @@ class App extends Component {
 export default App;
 ```
 
-以上使得 `moduleA.js` 及其单独的依赖成为一个独立的模块, 这个模块只有在用户点击`Load`按钮的时候才会加载.
+以上使得 `moduleA.js` 及其单独的依赖成为一个独立的模块, 这个模块只有在用户点击`Load`按钮的时候才会加载.
 
 ### 与 React Router 搭配使用
 
@@ -376,7 +376,7 @@ export default App;
 
 - 查看React文档的 [Code Splitting](https://reactjs.org/docs/code-splitting.html) 部分.
 
-## 添加样式
+## 添加样式
 
 我们用 [Webpack](https://webpack.js.org/) 处理所有的asset. Webpack提供了一种自定义方式，可以将“import”概念“扩展”到JavaScript以外. 
 
@@ -403,7 +403,7 @@ class Button extends Component {
 }
 ```
 
-**对于React而言非必须**, 但是很多人在用 [好处是什么?](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). 当然以上依赖于webpack, 如果你想换其他构建工具就不好办了.
+**对于React而言非必须**, 但是很多人在用 [好处是什么?](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). 当然以上依赖于webpack, 如果你想换其他构建工具就不好办了.
 
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
@@ -423,7 +423,7 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 }
 ```
 
-build后就变成:
+build后就变成:
 
 ```css
 .App {
@@ -444,10 +444,10 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 
 ## Adding a CSS Preprocessor (Sass, Less etc.)
 
-建议最好不要在不同的componet中使用同一个css classes. <br>
+建议最好不要在不同的componet中使用同一个css classes. <br>
 比如, 而不是使用 `.Button` CSS class in `<AcceptButton>` and `<RejectButton>` components, we recommend creating a `<Button>` component with its own `.Button` styles, that both `<AcceptButton>` and `<RejectButton>` can render (但是 [不是继承](https://facebook.github.io/react/docs/composition-vs-inheritance.html)).
 
-基于以上的 `component composition` 规则, CSS preprocessors 就没啥鸟用了. 当然你依然可以用... 下面我们用 Sass, but you can also use Less, or another alternative.
+基于以上的 `component composition` 规则, CSS preprocessors 就没啥鸟用了. 当然你依然可以用... 下面我们用 Sass, but you can also use Less, or another alternative.
 
 First, let’s install the command-line interface for Sass:
 
@@ -578,7 +578,7 @@ Please be advised that this is also a custom feature of Webpack.
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
 
-## 使用 `public` 文件夹
+## 使用 `public` 文件夹
 
 >Note: 依赖 `react-scripts@0.5.0` 及更高版本.
 
@@ -587,23 +587,23 @@ An alternative way of handling static assets is described in the next section.
 `public` 包含 HTML 文件, 你可以修改它, 例如 [修改页面标题](#changing-the-page-title).
 `<script>` 标签在build时会自动添加上去.
 
-### 在模块系统(Module System)之外添加资源(assets)
+### 在模块系统(Module System)之外添加资源(assets)
 
 你可以往`public` 中添加其他资源.
 
-但是, 我们更推荐你在js中 `import` 资源. 例如:
+但是, 我们更推荐你在js中 `import` 资源. 例如:
 - [添加样式](#添加样式) 
 - [添加 Images, Fonts, 和 Files](#添加-Images,-Fonts,-和-Files).
 
-这种机制的优点:
+这种机制的优点:
 
-* Scripts 和 stylesheets 可以压缩并打包在一起, 从而避免额外的网络请求.
-* 如果缺少文件, 会在build过程中就会暴露错误，而不是抛给用户404。.
-* 用文件的hash值来生成文件名, 不用担心浏览器缓存问题.
+* Scripts 和 stylesheets 可以压缩并打包在一起, 从而避免额外的网络请求.
+* 如果缺少文件, 会在build过程中就会暴露错误，而不是抛给用户404。.
+* 用文件的hash值来生成文件名, 不用担心浏览器缓存问题.
 
 但是依然想往`public` 中添加资源怎么办?
 
-如果你把文件放到 `public`, Webpack会把文件原封不动的复制到 build 文件夹下.  如果想引用 `public` 中的文件, 则需要使用 `PUBLIC_URL` 这个特殊变量.
+如果你把文件放到 `public`, Webpack会把文件原封不动的复制到 build 文件夹下.  如果想引用 `public` 中的文件, 则需要使用 `PUBLIC_URL` 这个特殊变量.
 
 如下(`index.html` 中):
 
@@ -611,7 +611,7 @@ An alternative way of handling static assets is described in the next section.
 <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 ```
 
-只有 `public` 中的文件才能通过 `%PUBLIC_URL%` 前缀引用. 如果想引用 `src` 或者 `node_modules` 中的文件, 那还是用 ```import``` 吧.
+只有 `public` 中的文件才能通过 `%PUBLIC_URL%` 前缀引用. 如果想引用 `src` 或者 `node_modules` 中的文件, 那还是用 ```import``` 吧.
 
 当通过 `npm run build` 构建时, `%PUBLIC_URL%` 就会被替换成绝对路径, so your project works even if you use client-side routing or host it at a non-root URL.
 
@@ -626,36 +626,36 @@ render() {
 }
 ```
 
-注意这种方式的缺点:
+注意这种方式的缺点:
 
-* `public` 下的文件都不会被预处理或者压缩.
-* 如果文件缺失, 不会在编译期报错, 会抛给用户404错误.
-* 最终的文件名中不含hash值, 所以当文件发生变更后, 你都需要添加查询参数或者重命名.
+* `public` 下的文件都不会被预处理或者压缩.
+* 如果文件缺失, 不会在编译期报错, 会抛给用户404错误.
+* 最终的文件名中不含hash值, 所以当文件发生变更后, 你都需要添加查询参数或者重命名.
 
 ### 什么时候使用 `public` 文件夹
 
 Normally we recommend importing [stylesheets](#adding-a-stylesheet), [images, and fonts](#adding-images-fonts-and-files) from JavaScript.
 `public` 主要用于应对以下几种不常见情况:
 
-* 你希望在构建后输出一个确定文件名的文件, 比如 [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
-* 有大量图片需要动态引用.
-* 你想在绑定的code外再引入一个小的js文件, 比如 [`pace.js`](http://github.hubspot.com/pace/docs/welcome/).
-* webpack与某些库不兼容, 但是你又没有其他选择, 只能用 `<script>` 标签引入.
+* 你希望在构建后输出一个确定文件名的文件, 比如 [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+* 有大量图片需要动态引用.
+* 你想在绑定的code外再引入一个小的js文件, 比如 [`pace.js`](http://github.hubspot.com/pace/docs/welcome/).
+* webpack与某些库不兼容, 但是你又没有其他选择, 只能用 `<script>` 标签引入.
 
-需要注意的是, 如果你添加 `<script>` , 会声明很多 global variables, 好好读读下面一部分吧..
+需要注意的是, 如果你添加 `<script>` , 会声明很多 global variables, 好好读读下面一部分吧..
 
 ## 使用全局变量(Global Variables)
 
-如果你在HTML中引入js, 这个js中声明了一些全局变量, 在你的js中直接引用这些全局变量时, linter 会因为找不到这个变量的定义抛出警告信息. 
+如果你在HTML中引入js, 这个js中声明了一些全局变量, 在你的js中直接引用这些全局变量时, linter 会因为找不到这个变量的定义抛出警告信息. 
 解决方案如下: 
 
-明确的从 `window` 对象读取变量, 例如:
+明确的从 `window` 对象读取变量, 例如:
 
 ```js
 const $ = window.$;
 ```
 
-或者可以修改在代码行后面添加注释 `// eslint-disable-line`, 来忽略这个错误.
+或者可以修改在代码行后面添加注释 `// eslint-disable-line`, 来忽略这个错误.
 
 ## 添加 Bootstrap
 
@@ -711,14 +711,14 @@ Recent versions of [Flow](http://flowtype.org/) work with Create React App proje
 
 1. `npm install --save flow-bin` (或 `yarn add flow-bin`).
 2. 在 `package.json` 中的 `scripts` 部分, 添加 `"flow": "flow"`.
-3. 运行 `npm run flow init` (或 `yarn flow init`) 在project的根目录生成 [`.flowconfig` 文件](https://flowtype.org/docs/advanced-configuration.html).
+3. 运行 `npm run flow init` (或 `yarn flow init`) 在project的根目录生成 [`.flowconfig` 文件](https://flowtype.org/docs/advanced-configuration.html).
 4. 给需要进行类型检查的文件添加 `// @flow`  (例如 `src/App.js`).
 
-运行 `npm run flow` (或者 `yarn flow`) 来检查文件的类型错误.
+运行 `npm run flow` (或者 `yarn flow`) 来检查文件的类型错误.
 可以使用IDE [Nuclide](https://nuclide.io/docs/languages/flow/) 获取更好的集成体验.
 未来我们计划将它集成到 Create React App 中.
 
-关于Flow的更多信息 [参照](https://flowtype.org/).
+关于Flow的更多信息 [参照](https://flowtype.org/).
 
 ## 添加 Router
 
@@ -736,7 +736,7 @@ npm install --save react-router-dom
 yarn add react-router-dom
 ```
 
-删除 `src/App.js` 中的所有代码, 用以下例子中的代码 [Basic Example](https://reacttraining.com/react-router/web/example/basic).
+删除 `src/App.js` 中的所有代码, 用以下例子中的代码 [Basic Example](https://reacttraining.com/react-router/web/example/basic).
 
 注意在部署你的app之前, 需要配置生产环境服务器支持 [client-side routing](#serving-apps-with-client-side-routing) .
 
@@ -748,7 +748,7 @@ yarn add react-router-dom
 
 **环境变量在构建期间嵌入**. 由于Create React App生成静态HTML / CSS / JS包，因此无法在运行时读取它们. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like [described here](#injecting-data-from-the-server-into-the-page). 或者 you can rebuild the app on the server anytime you change them.
 
->Note: 为了避免 [与本机其他环境变量名冲突](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527), 自定义的环境变量必须以 `REACT_APP_` 为开头, 除此之外的其他的变量名(除了 `NODE_ENV`)都会被忽略. 修改环境变量后要重启开发服务器..
+>Note: 为了避免 [与本机其他环境变量名冲突](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527), 自定义的环境变量必须以 `REACT_APP_` 为开头, 除此之外的其他的变量名(除了 `NODE_ENV`)都会被忽略. 修改环境变量后要重启开发服务器..
 
 这些环境变量将会定义在 `process.env`. 例如 `process.env.REACT_APP_SECRET_CODE`.
 
@@ -2333,4 +2333,4 @@ In the future, we might start automatically compiling incompatible third-party m
 
 ## Alternatives to Ejecting
 
-如果有许多相似的project, 推荐你 *fork* `react-scripts` 以及需要的其他依赖包. [这篇文章](https://auth0.com/blog/how-to-configure-create-react-app/) 做了深入研究. 更多讨论 [this issue](https://github.com/facebookincubator/create-react-app/issues/682).
+如果有许多相似的project, 推荐你 *fork* `react-scripts` 以及需要的其他依赖包. [这篇文章](https://auth0.com/blog/how-to-configure-create-react-app/) 做了深入研究. 更多讨论 [this issue](https://github.com/facebookincubator/create-react-app/issues/682).
