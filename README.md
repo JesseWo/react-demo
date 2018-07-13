@@ -1,6 +1,6 @@
 此项目是基于 [Create React App](https://github.com/facebookincubator/create-react-app) 脚手架创建.
 
-[用户引导的最新版本](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+以下内容翻译自 create-react-app [README.MD](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md), 同时精简啰嗦的叙述.
 
 ## 目录
 
@@ -10,17 +10,15 @@
   - [npm start](#npm-start)
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
-  - [npm run eject](#npm-run-eject)
-- [Supported Browsers](#supported-browsers)
+- [浏览器支持](#浏览器支持)
 - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills)
-- [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor)
-- [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor)
-- [Debugging in the Editor](#debugging-in-the-editor)
-- [Formatting Code Automatically](#formatting-code-automatically)
-- [Changing the Page `<title>`](#changing-the-page-title)
-- [Installing a Dependency](#installing-a-dependency)
-- [Importing a Component](#importing-a-component)
-- [Code Splitting](#code-splitting)
+- [编辑器语法高亮](#编辑器语法高亮)
+- [在编辑器中显示 Lint 输出](#在编辑器中显示Lint输出)
+- [Debugging](#Debugging)
+- [自动格式化代码](#自动格式化代码)
+- [修改页面标题 `<title>`](#修改页面标题-`<title>`)
+- [导入 Component](#导入-Component)
+- [代码拆分 (Code Splitting)](#代码拆分-(Code-Splitting))
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
 - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
@@ -34,7 +32,7 @@
   - [Using a Custom Theme](#using-a-custom-theme)
 - [Adding Flow](#adding-flow)
 - [Adding a Router](#adding-a-router)
-- [Adding Custom Environment Variables](#adding-custom-environment-variables)
+- [添加自定义环境变量](#添加自定义环境变量)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
   - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
@@ -162,7 +160,7 @@ my-app/
 ## 浏览器支持
 参考 [React documentation](https://reactjs.org/docs/react-dom.html#browser-support).
 
-## 支持的语言特性 and Polyfills
+## 支持的语言特性和 Polyfills
 
 支持最新的 JavaScript 标准.<br>
 除了 [ES6](https://github.com/lukehoban/es6features), 还支持:
@@ -192,16 +190,15 @@ Also note that using some newer syntax features like `for...of` or `[...nonArray
 
 详见 [relevant Babel documentation page](https://babeljs.io/docs/editors) 
 
-## Displaying Lint Output in the Editor
+## 在编辑器中显示Lint输出
 
->Note: this feature is available with `react-scripts@0.2.0` and higher.<br>
->It also only works with npm 3 or higher.
+Note: 
+>需要 `react-scripts@0.2.0` 及以上版本.<br>
+>npm 3 及以上.
 
-Some editors, including Sublime Text, Atom, and Visual Studio Code, provide plugins for ESLint.
+包括 Sublime Text, Atom, 和 Visual Studio Code 等很多编辑器都有 ESLint 插件.
 
-They are not required for linting. You should see the linter output right in your terminal as well as the browser console. However, if you prefer the lint results to appear right in your editor, there are some extra steps you can do.
-
-You would need to install an ESLint plugin for your editor first. Then, add a file called `.eslintrc` to the project root:
+首先在你的编辑器上安装 ESLint 插件. 然后在 `project` 根目录新建 `.eslintrc` :
 
 ```js
 {
@@ -209,23 +206,21 @@ You would need to install an ESLint plugin for your editor first. Then, add a fi
 }
 ```
 
-Now your editor should report the linting warnings.
+现在你的编辑器上就能显示linting warnings 了.
 
-Note that even if you edit your `.eslintrc` file further, these changes will **only affect the editor integration**. They won’t affect the terminal and in-browser lint output. This is because Create React App intentionally provides a minimal set of rules that find common mistakes.
+需要注意的是 `.eslintrc`  只会影响编辑器, 不会影响 terminal 和 in-browser 的 lint 输出. 因为 Create React App 只提供了常见错误的简单规则.
 
-If you want to enforce a coding style for your project, consider using [Prettier](https://github.com/jlongster/prettier) instead of ESLint style rules.
+如果想在项目中强制执行代码规范, 应该用 [Prettier](https://github.com/jlongster/prettier) .
 
 ## Debugging
 
 **目前支持 [Visual Studio Code](https://code.visualstudio.com) 和 [WebStorm](https://www.jetbrains.com/webstorm/).**
 
-Visual Studio Code and WebStorm support debugging out of the box with Create React App. This enables you as a developer to write and debug your React code without leaving the editor, and most importantly it enables you to have a continuous development workflow, where context switching is minimal, as you don’t have to switch between tools.
-
 ### Visual Studio Code
 
-You would need to have the latest version of [VS Code](https://code.visualstudio.com) and VS Code [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) installed.
+需 [VS Code](https://code.visualstudio.com) 最新版, 并安装 [Chrome Debugger Extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) 插件.
 
-Then add the block below to your `launch.json` file and put it inside the `.vscode` folder in your app’s root directory.
+在 `launch.json` 文件中添加如下内容, 然后放到project根目录下的 `.vscode` 里.
 
 ```json
 {
@@ -242,57 +237,54 @@ Then add the block below to your `launch.json` file and put it inside the `.vsco
   }]
 }
 ```
->Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](#advanced-configuration).
+>Note: 如果你通过 [HOST or PORT environment variables](#advanced-configuration) 修改了host或者port, 记得把上面的url也同步改掉.
 
-Start your app by running `npm start`, and start debugging in VS Code by pressing `F5` or by clicking the green debug icon. You can now write code, set breakpoints, make changes to the code, and debug your newly modified code—all from your editor.
+`npm start` 运行APP, 然后在VS Code 中 按 `F5` 或者点击绿色的 debug 按钮开始debug. 
 
-Having problems with VS Code Debugging? Please see their [troubleshooting guide](https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting).
+如果 VS Code Debugging 遇到问题, 请参考 [troubleshooting guide](https://github.com/Microsoft/vscode-chrome-debug/blob/master/README.md#troubleshooting).
 
 ### WebStorm
 
-You would need to have [WebStorm](https://www.jetbrains.com/webstorm/) and [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension installed.
+[WebStorm](https://www.jetbrains.com/webstorm/), 并且安装 [JetBrains IDE Support](https://chrome.google.com/webstore/detail/jetbrains-ide-support/hmhgeddbohgjknpmjagkdomcpobmllji) Chrome extension.
 
-In the WebStorm menu `Run` select `Edit Configurations...`. Then click `+` and select `JavaScript Debug`. Paste `http://localhost:3000` into the URL field and save the configuration.
+在 WebStorm 中点击 `Run` 旁边的下拉菜单, 然后选中 `Edit Configurations...` 打开对话框. 然后点击左上角 `+` 选中 `JavaScript Debug`. 最后粘贴 `http://localhost:3000` 到 URL 里, 点击 OK 保存配置.
 
->Note: the URL may be different if you've made adjustments via the [HOST or PORT environment variables](#advanced-configuration).
+>Note: 如果你通过 [HOST or PORT environment variables](#advanced-configuration) 修改了host或者port, 记得把上面的url也同步改掉.
 
-Start your app by running `npm start`, then press `^D` on macOS or `F9` on Windows and Linux or click the green debug icon to start debugging in WebStorm.
+`npm start` 运行APP, 然后按 `^D` on macOS 或者 `F9` on Windows 和 Linux 或者点击绿色的 debug 按钮开始debug. 
 
-The same way you can debug your application in IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, and RubyMine. 
+当然, 在 IntelliJ IDEA Ultimate, PhpStorm, PyCharm Pro, 和 RubyMine 中的调试方式都与以上相同. 
 
 ## 自动格式化代码
 
-Prettier is an opinionated code formatter with support for JavaScript, CSS and JSON. With Prettier you can format the code you write automatically to ensure a code style within your project. See the [Prettier's GitHub page](https://github.com/prettier/prettier) for more information, and look at this [page to see it in action](https://prettier.github.io/prettier/).
+Prettier 是个可选的代码格式化工具, 同时支持 JavaScript, CSS 和 JSON. 具体详见 [Prettier's GitHub](https://github.com/prettier/prettier) 和 [page to see it in action](https://prettier.github.io/prettier/).
 
-To format our code whenever we make a commit in git, we need to install the following dependencies:
+如果要在 git commit 代码的时候进行代码自动格式化, 则需要安装以下依赖:
 
 ```sh
 npm install --save husky lint-staged prettier
 ```
 
-Alternatively you may use `yarn`:
+也可以用 `yarn`:
 
 ```sh
 yarn add husky lint-staged prettier
 ```
 
-* `husky` makes it easy to use githooks as if they are npm scripts.
-* `lint-staged` allows us to run scripts on staged files in git. See this [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
-* `prettier` is the JavaScript formatter we will run before commits.
+* `husky` 如同使用 npm scripts 一样, 更容易的使用 githooks.
+* `lint-staged` 在 git staged files 上执行脚本. [blog post about lint-staged to learn more about it](https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8).
+* `prettier` JavaScript formatter, 在commit之前运行.
 
-Now we can make sure every file is formatted correctly by adding a few lines to the `package.json` in the project root.
+修改 `package.json`.
 
-Add the following line to `scripts` section:
-
+新增scripts
 ```diff
   "scripts": {
 +   "precommit": "lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
 ```
-
-Next we add a 'lint-staged' field to the `package.json`, for example:
-
+新增lint-staged
 ```diff
   "dependencies": {
     // ...
@@ -306,9 +298,10 @@ Next we add a 'lint-staged' field to the `package.json`, for example:
   "scripts": {
 ```
 
-Now, whenever you make a commit, Prettier will format the changed files automatically. You can also run `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,json,css}"` to format your entire project for the first time.
+现在, 当你commit代码时, Prettier 就会自动格式化你改动的文件了.<br> 
+当然, 运行 `./node_modules/.bin/prettier --single-quote --write "src/**/*.{js,jsx,json,css}"` 可以格式化整个project
 
-Next you might want to integrate Prettier in your favorite editor. Read the section on [Editor Integration](https://prettier.io/docs/en/editors.html) on the Prettier GitHub page.
+最后, 如果你想在你喜欢的编辑器中集成 Prettier, 可以参见 Prettier GitHub [Editor Integration](https://prettier.io/docs/en/editors.html).
 
 ## 修改页面标题 `<title>`
 
@@ -316,11 +309,11 @@ Next you might want to integrate Prettier in your favorite editor. Read the sect
 
 如果想动态修改标题, you can use the browser [`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title) API. For more complex scenarios when you want to change the title from React components, you can use [React Helmet](https://github.com/nfl/react-helmet), a third party library.
 
-If you use a custom server for your app in production and want to modify the title before it gets sent to the browser, you can follow advice in [this section](#generating-dynamic-meta-tags-on-the-server). Alternatively, you can pre-build each page as a static HTML file which then loads the JavaScript bundle, which is covered [here](#pre-rendering-into-static-html-files).
+如果你想在生产环境中使用自定义服务器，并想在将标题发送到浏览器之前修改标题, 可以参照 [这部分](#generating-dynamic-meta-tags-on-the-server). 或者可以提前build每个页面作为静态HTML页面, 然后再加载 JavaScript bundle, 参照 [这里](#pre-rendering-into-static-html-files).
 
-## Importing a Component
+## 导入 Component
 
-对于模块化方案, 可以用 `require()` 和 `module.exports`, 推荐使用 [`import` and `export`](http://exploringjs.com/es6/ch_modules.html).
+对于模块化方案, 可以用CommonJS的 `require()` 和 `module.exports`, 推荐使用ES6的 [`import` and `export`](http://exploringjs.com/es6/ch_modules.html).
 
 注意 [default 和 named exports](http://stackoverflow.com/questions/36795819/react-native-es-6-when-should-i-use-curly-braces-for-import/36796281#36796281) 两者之间的区别, 小心踩坑.
 
@@ -330,13 +323,13 @@ If you use a custom server for your app in production and want to modify the tit
 * [Exploring ES6: Modules](http://exploringjs.com/es6/ch_modules.html)
 * [Understanding ES6: Modules](https://leanpub.com/understandinges6/read#leanpub-auto-encapsulating-code-with-modules)
 
-## Code Splitting
+## 代码拆分 (Code Splitting)
 
-Instead of downloading the entire app before users can use it, code splitting allows you to split your code into small chunks which you can then load on demand.
+区别于把整个APP下载下来, code splitting 可以将你的代码拆分成小块, 实现按需加载.
 
-This project setup supports code splitting via [dynamic `import()`](http://2ality.com/2017/01/import-operator.html#loading-code-on-demand). Its [proposal](https://github.com/tc39/proposal-dynamic-import) is in stage 3. The `import()` function-like form takes the module name as an argument and returns a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which always resolves to the namespace object of the module.
+Code Splitting 通过 [dynamic `import()`](http://2ality.com/2017/01/import-operator.html#loading-code-on-demand) 来实现. 动态 ```import()``` 是 stage 3 的[提案](https://github.com/tc39/proposal-dynamic-import) . `import()` function-like form takes the module name as an argument and returns a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) which always resolves to the namespace object of the module.
 
-Here is an example:
+举个栗子:
 
 ### `moduleA.js`
 
@@ -373,20 +366,21 @@ class App extends Component {
 export default App;
 ```
 
-This will make `moduleA.js` and all its unique dependencies as a separate chunk that only loads after the user clicks the 'Load' button.
+以上使得 `moduleA.js` 及其单独的依赖成为一个独立的模块, 这个模块只有在用户点击`Load`按钮的时候才会加载.
 
-You can also use it with `async` / `await` syntax if you prefer it.
+### 与 React Router 搭配使用
 
-### With React Router
+- [how to use code splitting with React Router](http://serverless-stack.com/chapters/code-splitting-in-create-react-app.html).
 
-If you are using React Router check out [this tutorial](http://serverless-stack.com/chapters/code-splitting-in-create-react-app.html) on how to use code splitting with it. You can find the companion GitHub repository [here](https://github.com/AnomalyInnovations/serverless-stack-demo-client/tree/code-splitting-in-create-react-app).
+- [the companion GitHub repository](https://github.com/AnomalyInnovations/serverless-stack-demo-client/tree/code-splitting-in-create-react-app).
 
-Also check out the [Code Splitting](https://reactjs.org/docs/code-splitting.html) section in React documentation.
+- 查看React文档的 [Code Splitting](https://reactjs.org/docs/code-splitting.html) 部分.
 
 ## 添加样式
 
 我们用 [Webpack](https://webpack.js.org/) 处理所有的asset. Webpack提供了一种自定义方式，可以将“import”概念“扩展”到JavaScript以外. 
 
+举个栗子
 ### `Button.css`
 
 ```css
@@ -409,7 +403,7 @@ class Button extends Component {
 }
 ```
 
-**This is not required for React** but many people find this feature convenient. [这种方式的好处](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). However you should be aware that this makes your code less portable to other build tools and environments than Webpack.
+**对于React而言非必须**, 但是很多人在用 [好处是什么?](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). 当然以上依赖于webpack, 如果你想换其他构建工具就不好办了.
 
 In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
 
@@ -419,7 +413,7 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 
 通过[Autoprefixer](https://github.com/postcss/autoprefixer) 压缩 CSS 并且 自动添加 vendor prefixes (供应商前缀)
 
-比如:
+举个栗子:
 
 ```css
 .App {
@@ -429,7 +423,7 @@ If you are concerned about using Webpack-specific semantics, you can put all you
 }
 ```
 
-becomes this:
+build后就变成:
 
 ```css
 .App {
@@ -584,42 +578,44 @@ Please be advised that this is also a custom feature of Webpack.
 **It is not required for React** but many people enjoy it (and React Native uses a similar mechanism for images).<br>
 An alternative way of handling static assets is described in the next section.
 
-## Using the `public` Folder
+## 使用 `public` 文件夹
 
->Note: this feature is available with `react-scripts@0.5.0` and higher.
+>Note: 依赖 `react-scripts@0.5.0` 及更高版本.
 
-### Changing the HTML
+### 修改 HTML
 
-The `public` folder contains the HTML file so you can tweak it, for example, to [set the page title](#changing-the-page-title).
-The `<script>` tag with the compiled code will be added to it automatically during the build process.
+`public` 包含 HTML 文件, 你可以修改它, 例如 [修改页面标题](#changing-the-page-title).
+`<script>` 标签在build时会自动添加上去.
 
-### Adding Assets Outside of the Module System
+### 在模块系统(Module System)之外添加资源(assets)
 
-You can also add other assets to the `public` folder.
+你可以往`public` 中添加其他资源.
 
-Note that we normally encourage you to `import` assets in JavaScript files instead.
-For example, see the sections on [adding a stylesheet](#adding-a-stylesheet) and [adding images and fonts](#adding-images-fonts-and-files).
-This mechanism provides a number of benefits:
+但是, 我们更推荐你在js中 `import` 资源. 例如:
+- [添加样式](#添加样式) 
+- [添加 Images, Fonts, 和 Files](#添加-Images,-Fonts,-和-Files).
 
-* Scripts and stylesheets get minified and bundled together to avoid extra network requests.
-* Missing files cause compilation errors instead of 404 errors for your users.
-* Result filenames include content hashes so you don’t need to worry about browsers caching their old versions.
+这种机制的优点:
 
-However there is an **escape hatch** that you can use to add an asset outside of the module system.
+* Scripts 和 stylesheets 可以压缩并打包在一起, 从而避免额外的网络请求.
+* 如果缺少文件, 会在build过程中就会暴露错误，而不是抛给用户404。.
+* 用文件的hash值来生成文件名, 不用担心浏览器缓存问题.
 
-If you put a file into the `public` folder, it will **not** be processed by Webpack. Instead it will be copied into the build folder untouched.   To reference assets in the `public` folder, you need to use a special variable called `PUBLIC_URL`.
+但是依然想往`public` 中添加资源怎么办?
 
-Inside `index.html`, you can use it like this:
+如果你把文件放到 `public`, Webpack会把文件原封不动的复制到 build 文件夹下.  如果想引用 `public` 中的文件, 则需要使用 `PUBLIC_URL` 这个特殊变量.
+
+如下(`index.html` 中):
 
 ```html
 <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 ```
 
-Only files inside the `public` folder will be accessible by `%PUBLIC_URL%` prefix. If you need to use a file from `src` or `node_modules`, you’ll have to copy it there to explicitly specify your intention to make this file a part of the build.
+只有 `public` 中的文件才能通过 `%PUBLIC_URL%` 前缀引用. 如果想引用 `src` 或者 `node_modules` 中的文件, 那还是用 ```import``` 吧.
 
-When you run `npm run build`, Create React App will substitute `%PUBLIC_URL%` with a correct absolute path so your project works even if you use client-side routing or host it at a non-root URL.
+当通过 `npm run build` 构建时, `%PUBLIC_URL%` 就会被替换成绝对路径, so your project works even if you use client-side routing or host it at a non-root URL.
 
-In JavaScript code, you can use `process.env.PUBLIC_URL` for similar purposes:
+在js中, 可以使用 `process.env.PUBLIC_URL` 达到同样的目的:
 
 ```js
 render() {
@@ -630,39 +626,38 @@ render() {
 }
 ```
 
-Keep in mind the downsides of this approach:
+注意这种方式的缺点:
 
-* None of the files in `public` folder get post-processed or minified.
-* Missing files will not be called at compilation time, and will cause 404 errors for your users.
-* Result filenames won’t include content hashes so you’ll need to add query arguments or rename them every time they change.
+* `public` 下的文件都不会被预处理或者压缩.
+* 如果文件缺失, 不会在编译期报错, 会抛给用户404错误.
+* 最终的文件名中不含hash值, 所以当文件发生变更后, 你都需要添加查询参数或者重命名.
 
-### When to Use the `public` Folder
+### 什么时候使用 `public` 文件夹
 
 Normally we recommend importing [stylesheets](#adding-a-stylesheet), [images, and fonts](#adding-images-fonts-and-files) from JavaScript.
-The `public` folder is useful as a workaround for a number of less common cases:
+`public` 主要用于应对以下几种不常见情况:
 
-* You need a file with a specific name in the build output, such as [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
-* You have thousands of images and need to dynamically reference their paths.
-* You want to include a small script like [`pace.js`](http://github.hubspot.com/pace/docs/welcome/) outside of the bundled code.
-* Some library may be incompatible with Webpack and you have no other option but to include it as a `<script>` tag.
+* 你希望在构建后输出一个确定文件名的文件, 比如 [`manifest.webmanifest`](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+* 有大量图片需要动态引用.
+* 你想在绑定的code外再引入一个小的js文件, 比如 [`pace.js`](http://github.hubspot.com/pace/docs/welcome/).
+* webpack与某些库不兼容, 但是你又没有其他选择, 只能用 `<script>` 标签引入.
 
-Note that if you add a `<script>` that declares global variables, you also need to read the next section on using them.
+需要注意的是, 如果你添加 `<script>` , 会声明很多 global variables, 好好读读下面一部分吧..
 
-## Using Global Variables
+## 使用全局变量(Global Variables)
 
-When you include a script in the HTML file that defines global variables and try to use one of these variables in the code, the linter will complain because it cannot see the definition of the variable.
+如果你在HTML中引入js, 这个js中声明了一些全局变量, 在你的js中直接引用这些全局变量时, linter 会因为找不到这个变量的定义抛出警告信息. 
+解决方案如下: 
 
-You can avoid this by reading the global variable explicitly from the `window` object, for example:
+明确的从 `window` 对象读取变量, 例如:
 
 ```js
 const $ = window.$;
 ```
 
-This makes it obvious you are using a global variable intentionally rather than because of a typo.
+或者可以修改在代码行后面添加注释 `// eslint-disable-line`, 来忽略这个错误.
 
-Alternatively, you can force the linter to ignore any line by adding `// eslint-disable-line` after it.
-
-## Adding Bootstrap
+## 添加 Bootstrap
 
 You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
 
@@ -695,7 +690,7 @@ import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 
 Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
 
-### Using a Custom Theme
+### 使用自定义主题
 
 Sometimes you might need to tweak the visual styles of Bootstrap (or equivalent package).<br>
 We suggest the following approach:
@@ -706,61 +701,58 @@ We suggest the following approach:
 
 Here is an example of adding a [customized Bootstrap](https://medium.com/@tacomanator/customizing-create-react-app-aa9ffb88165) that follows these steps.
 
-## Adding Flow
+## 添加 Flow
 
-Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
+Flow 是个静态类型分析工具. [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb).
 
 Recent versions of [Flow](http://flowtype.org/) work with Create React App projects out of the box.
 
-To add Flow to a Create React App project, follow these steps:
+添加 Flow 的步骤:
 
-1. Run `npm install --save flow-bin` (or `yarn add flow-bin`).
-2. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-3. Run `npm run flow init` (or `yarn flow init`) to create a [`.flowconfig` file](https://flowtype.org/docs/advanced-configuration.html) in the root directory.
-4. Add `// @flow` to any files you want to type check (for example, to `src/App.js`).
+1. `npm install --save flow-bin` (或 `yarn add flow-bin`).
+2. 在 `package.json` 中的 `scripts` 部分, 添加 `"flow": "flow"`.
+3. 运行 `npm run flow init` (或 `yarn flow init`) 在project的根目录生成 [`.flowconfig` 文件](https://flowtype.org/docs/advanced-configuration.html).
+4. 给需要进行类型检查的文件添加 `// @flow`  (例如 `src/App.js`).
 
-Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
-You can optionally use an IDE like [Nuclide](https://nuclide.io/docs/languages/flow/) for a better integrated experience.
-In the future we plan to integrate it into Create React App even more closely.
+运行 `npm run flow` (或者 `yarn flow`) 来检查文件的类型错误.
+可以使用IDE [Nuclide](https://nuclide.io/docs/languages/flow/) 获取更好的集成体验.
+未来我们计划将它集成到 Create React App 中.
 
-To learn more about Flow, check out [its documentation](https://flowtype.org/).
+关于Flow的更多信息 [参照](https://flowtype.org/).
 
-## Adding a Router
+## 添加 Router
 
-Create React App doesn't prescribe a specific routing solution, but [React Router](https://reacttraining.com/react-router/) is the most popular one.
+[React Router](https://reacttraining.com/react-router/)
 
-To add it, run:
+安装:
 
 ```sh
 npm install --save react-router-dom
 ```
 
-Alternatively you may use `yarn`:
+或者 `yarn`:
 
 ```sh
 yarn add react-router-dom
 ```
 
-To try it, delete all the code in `src/App.js` and replace it with any of the examples on its website. The [Basic Example](https://reacttraining.com/react-router/web/example/basic) is a good place to get started.
+删除 `src/App.js` 中的所有代码, 用以下例子中的代码 [Basic Example](https://reacttraining.com/react-router/web/example/basic).
 
-Note that [you may need to configure your production server to support client-side routing](#serving-apps-with-client-side-routing) before deploying your app.
+注意在部署你的app之前, 需要配置生产环境服务器支持 [client-side routing](#serving-apps-with-client-side-routing) .
 
-## Adding Custom Environment Variables
+## 添加自定义环境变量
 
->Note: this feature is available with `react-scripts@0.2.3` and higher.
+>Note: 需 `react-scripts@0.2.3` 及更高版本.
 
-Your project can consume variables declared in your environment as if they were declared locally in your JS files. By
-default you will have `NODE_ENV` defined for you, and any other environment variables starting with
-`REACT_APP_`.
+默认有 `NODE_ENV` 以及其他以 `REACT_APP_` 开头的环境变量
 
-**The environment variables are embedded during the build time**. Since Create React App produces a static HTML/CSS/JS bundle, it can’t possibly read them at runtime. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like [described here](#injecting-data-from-the-server-into-the-page). Alternatively you can rebuild the app on the server anytime you change them.
+**环境变量在构建期间嵌入**. 由于Create React App生成静态HTML / CSS / JS包，因此无法在运行时读取它们. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like [described here](#injecting-data-from-the-server-into-the-page). 或者 you can rebuild the app on the server anytime you change them.
 
->Note: You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid accidentally [exposing a private key on the machine that could have the same name](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
+>Note: 为了避免 [与本机其他环境变量名冲突](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527), 自定义的环境变量必须以 `REACT_APP_` 为开头, 除此之外的其他的变量名(除了 `NODE_ENV`)都会被忽略. 修改环境变量后要重启开发服务器..
 
-These environment variables will be defined for you on `process.env`. For example, having an environment
-variable named `REACT_APP_SECRET_CODE` will be exposed in your JS as `process.env.REACT_APP_SECRET_CODE`.
+这些环境变量将会定义在 `process.env`. 例如 `process.env.REACT_APP_SECRET_CODE`.
 
-There is also a special built-in environment variable called `NODE_ENV`. You can read it from `process.env.NODE_ENV`. When you run `npm start`, it is always equal to `'development'`, when you run `npm test` it is always equal to `'test'`, and when you run `npm run build` to make a production bundle, it is always equal to `'production'`. **You cannot override `NODE_ENV` manually.** This prevents developers from accidentally deploying a slow development build to production.
+这里有个内置的环境变量叫做 `NODE_ENV`. 你可以通过 `process.env.NODE_ENV` 来读取. 当运行 `npm start`, 它等于 `'development'`, 当运行 `npm test` 它等于 `'test'`, 当运行 `npm run build` 它等于 `'production'`. **禁止手动覆盖 `NODE_ENV` 变量.**
 
 These environment variables can be useful for displaying information conditionally based on where the project is
 deployed or consuming sensitive data that lives outside of version control.
@@ -781,7 +773,7 @@ render() {
 }
 ```
 
-During the build, `process.env.REACT_APP_SECRET_CODE` will be replaced with the current value of the `REACT_APP_SECRET_CODE` environment variable. Remember that the `NODE_ENV` variable will be set for you automatically.
+build过程中, `process.env.REACT_APP_SECRET_CODE` 将会被替换成 `REACT_APP_SECRET_CODE` 的当前值.
 
 When you load the app in the browser and inspect the `<input>`, you will see its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
 
@@ -823,9 +815,9 @@ Note that the caveats from the above section apply:
 * Apart from a few built-in variables (`NODE_ENV` and `PUBLIC_URL`), variable names must start with `REACT_APP_` to work.
 * The environment variables are injected at build time. If you need to inject them at runtime, [follow this approach instead](#generating-dynamic-meta-tags-on-the-server).
 
-### Adding Temporary Environment Variables In Your Shell
+### 在shell中添加临时的环境变量
 
-Defining environment variables can vary between OSes. It’s also important to know that this manner is temporary for the
+定义环境变量可能因操作系统而异。 It’s also important to know that this manner is temporary for the
 life of the shell session.
 
 #### Windows (cmd.exe)
@@ -848,7 +840,7 @@ set "REACT_APP_SECRET_CODE=abcdef" && npm start
 REACT_APP_SECRET_CODE=abcdef npm start
 ```
 
-### Adding Development Environment Variables In `.env`
+### 添加开发环境变量 In `.env`
 
 >Note: this feature is available with `react-scripts@0.5.0` and higher.
 
@@ -904,7 +896,7 @@ REACT_APP_FOO=$DOMAIN/foo
 REACT_APP_BAR=$DOMAIN/bar
 ```
 
-## Can I Use Decorators?
+## 能用 Decorators 吗?
 
 Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.<br>
 Create React App doesn’t support decorator syntax at the moment because:
@@ -1067,7 +1059,7 @@ Matches are regular expressions, so that you can use a regexp to match multiple 
 }
 ```
 
-### Configuring a WebSocket Proxy
+### 配置 WebSocket Proxy
 
 When setting up a WebSocket proxy, there are a some extra considerations to be aware of.
 
@@ -1097,7 +1089,7 @@ Either way, you can proxy WebSocket requests manually in `package.json`:
 }
 ```
 
-## Using HTTPS in Development
+## 在开发中使用HTTPS
 
 >Note: this feature is available with `react-scripts@0.4.0` and higher.
 
@@ -1129,7 +1121,7 @@ Note that the server will use a self-signed certificate, so your web browser wil
 
 ## Generating Dynamic `<meta>` Tags on the Server
 
-Since Create React App doesn’t support server rendering, you might be wondering how to make `<meta>` tags dynamic and reflect the current URL. To solve this, we recommend to add placeholders into the HTML, like this:
+因为 Create React App 不支持服务端渲染, 你可能想知道如何动态修改 `<meta>` 标签, 并且映射当前的URL. 为了解决这个问题, 我们推荐在HTML中添加 placeholders, 如下所示:
 
 ```html
 <!doctype html>
@@ -1143,7 +1135,7 @@ Then, on the server, regardless of the backend you use, you can read `index.html
 
 If you use a Node server, you can even share the route matching logic between the client and the server. However duplicating it also works fine in simple cases.
 
-## Pre-Rendering into Static HTML Files
+## 提前渲染成静态 HTML 文件
 
 If you’re hosting your `build` with a static hosting provider you can use [react-snapshot](https://www.npmjs.com/package/react-snapshot) or [react-snap](https://github.com/stereobooster/react-snap) to generate HTML pages for each route, or relative link, in your application. These pages will then seamlessly become active, or “hydrated”, when the JavaScript bundle has loaded.
 
@@ -1227,7 +1219,7 @@ it('sums numbers', () => {
 All `expect()` matchers supported by Jest are [extensively documented here](https://facebook.github.io/jest/docs/en/expect.html#content).<br>
 You can also use [`jest.fn()` and `expect(fn).toBeCalled()`](https://facebook.github.io/jest/docs/en/expect.html#tohavebeencalled) to create “spies” or mock functions.
 
-### Testing Components
+### 测试 Components
 
 There is a broad spectrum of component testing techniques. They range from a “smoke test” verifying that a component renders without throwing, to shallow rendering and testing some of the output, to full rendering and testing component lifecycle and state changes.
 
@@ -1320,7 +1312,7 @@ To enable this, install `jest-enzyme`:
 npm install --save jest-enzyme
 ```
 
-Alternatively you may use `yarn`:
+或者 `yarn`:
 
 ```sh
 yarn add jest-enzyme
@@ -1421,7 +1413,7 @@ Example package.json:
 }
 ```
 
-### Continuous Integration
+### CI (Continuous Integration)
 
 By default `npm test` runs the watcher with interactive CLI. However, you can force it to run tests once and finish the process by setting an environment variable called `CI`.
 
@@ -1675,11 +1667,11 @@ Learn more about React Styleguidist:
 * [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
 * [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
 
-## Publishing Components to npm
+## 发布 Components 到 npm
 
 Create React App doesn't provide any built-in functionality to publish a component to npm. If you're ready to extract a component from your project so other people can use it, we recommend moving it to a separate directory outside of your project and then using a tool like [nwb](https://github.com/insin/nwb#react-components-and-libraries) to prepare it for publishing.
 
-## Making a Progressive Web App
+## 制作PWA应用 (Progressive Web App)
 
 By default, the production build is a fully functional, offline-first
 [Progressive Web App](https://developers.google.com/web/progressive-web-apps/).
@@ -1773,7 +1765,7 @@ and then configure the
 option in the `SWPrecacheWebpackPlugin` section of
 [`webpack.config.prod.js`](../config/webpack.config.prod.js).
 
-### Progressive Web App Metadata
+###  PWA(Progressive Web App) Metadata
 
 The default configuration includes a web app manifest located at
 [`public/manifest.json`](public/manifest.json), that you can customize with
@@ -1822,11 +1814,11 @@ npm run build
 npm run analyze
 ```
 
-## Deployment
+## 部署
 
 `npm run build` creates a `build` directory with a production build of your app. Set up your favorite HTTP server so that a visitor to your site is served `index.html`, and requests to static paths like `/static/js/main.<hash>.js` are served with the contents of the `/static/js/main.<hash>.js` file.
 
-### Static Server
+### 静态服务器
 
 For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
 
@@ -1843,7 +1835,7 @@ Run this command to get a full list of the options available:
 serve -h
 ```
 
-### Other Solutions
+### 其它方案
 
 You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
 
@@ -2341,8 +2333,4 @@ In the future, we might start automatically compiling incompatible third-party m
 
 ## Alternatives to Ejecting
 
-[Ejecting](#npm-run-eject) lets you customize anything, but from that point on you have to maintain the configuration and scripts yourself. This can be daunting if you have many similar projects. In such cases instead of ejecting we recommend to *fork* `react-scripts` and any other packages you need. [This article](https://auth0.com/blog/how-to-configure-create-react-app/) dives into how to do it in depth. You can find more discussion in [this issue](https://github.com/facebookincubator/create-react-app/issues/682).
-
-## Something Missing?
-
-If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
+如果有许多相似的project, 推荐你 *fork* `react-scripts` 以及需要的其他依赖包. [这篇文章](https://auth0.com/blog/how-to-configure-create-react-app/) 做了深入研究. 更多讨论 [this issue](https://github.com/facebookincubator/create-react-app/issues/682).
