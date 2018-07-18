@@ -19,19 +19,19 @@
 - [修改页面标题 `<title>`](#修改页面标题-`<title>`)
 - [导入 Component](#导入-Component)
 - [代码拆分 (Code Splitting)](#代码拆分-(Code-Splitting))
-- [Adding a Stylesheet](#adding-a-stylesheet)
+- [添加样式](#添加样式)
 - [Post-Processing CSS](#post-processing-css)
-- [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc)
-- [Adding Images, Fonts, and Files](#adding-images-fonts-and-files)
-- [Using the `public` Folder](#using-the-public-folder)
-  - [Changing the HTML](#changing-the-html)
+- [CSS 预处理器 (Sass, Less etc.)](#CSS-预处理器-(Sass,-Less-etc.))
+- [添加 Images, Fonts, 和 Files](#添加-Images,-Fonts,-和-Files)
+- [使用 public 文件夹](#使用-public-文件夹)
+  - [修改 HTML](#修改-HTML)
   - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system)
-  - [When to Use the `public` Folder](#when-to-use-the-public-folder)
-- [Using Global Variables](#using-global-variables)
+  - [什么时候使用 public 文件夹](#什么时候使用-public-文件夹)
+- [使用全局变量(Global Variables)](#使用全局变量(Global-Variables))
 - [Adding Bootstrap](#adding-bootstrap)
   - [Using a Custom Theme](#using-a-custom-theme)
-- [Adding Flow](#adding-flow)
-- [Adding a Router](#adding-a-router)
+- [添加 Flow](#添加-Flow)
+- [添加 Router](#添加-Router)
 - [添加自定义环境变量](#添加自定义环境变量)
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
@@ -661,21 +661,21 @@ const $ = window.$;
 
 ## 添加 Bootstrap
 
-You don’t have to use [React Bootstrap](https://react-bootstrap.github.io) together with React but it is a popular library for integrating Bootstrap with React apps. If you need it, you can integrate it with Create React App by following these steps:
+在React中集成Bootstrap, 需要 [React Bootstrap](https://react-bootstrap.github.io) 这个库. 在 Create React App 中的集成步骤如下:
 
-Install React Bootstrap and Bootstrap from npm. React Bootstrap does not include Bootstrap CSS so this needs to be installed as well:
+用npm安装 React Bootstrap 和 Bootstrap: (React Bootstrap 并不包括 Bootstrap CSS , 需要单独安装)
 
 ```sh
 npm install --save react-bootstrap bootstrap@3
 ```
 
-Alternatively you may use `yarn`:
+或 `yarn`:
 
 ```sh
 yarn add react-bootstrap bootstrap@3
 ```
 
-Import Bootstrap CSS and optionally Bootstrap theme CSS in the beginning of your ```src/index.js``` file:
+在 ```src/index.js``` 的开头导入Bootstrap CSS 和 Bootstrap theme CSS(可选):
 
 ```js
 import 'bootstrap/dist/css/bootstrap.css';
@@ -684,13 +684,13 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 // components takes precedence over default styles.
 ```
 
-Import required React Bootstrap components within ```src/App.js``` file or your custom component files:
+在 ```src/App.js``` 中,按需导入 React Bootstrap components  或者你的自定义组件:
 
 ```js
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
-Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js) redone using React Bootstrap.
+现在就可以在你的组件中使用导入的 React Bootstrap 组件了. 具体例子 [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js).
 
 ### 使用自定义主题
 
