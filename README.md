@@ -36,7 +36,7 @@
   - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html)
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
   - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
-- [Can I Use Decorators?](#can-i-use-decorators)
+- [支持 Decorators 吗?](#支持-Decorators-吗?)
 - [Fetching Data with AJAX Requests](#fetching-data-with-ajax-requests)
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
@@ -75,8 +75,8 @@
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
-- [Deployment](#deployment)
-  - [Static Server](#static-server)
+- [部署](#部署)
+  - [静态服务器](#静态服务器)
   - [Other Solutions](#other-solutions)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
@@ -88,7 +88,7 @@
   - [Now](#now)
   - [S3 and CloudFront](#s3-and-cloudfront)
   - [Surge](#surge)
-- [Advanced Configuration](#advanced-configuration)
+- [高级配置](#高级配置)
 - [Troubleshooting](#troubleshooting)
   - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes)
   - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra)
@@ -97,7 +97,6 @@
   - [`npm run build` fails to minify](#npm-run-build-fails-to-minify)
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
-- [Something Missing?](#something-missing)
 
 ## 更新到最新版本
 
@@ -461,7 +460,7 @@ npm install --save node-sass-chokidar
 yarn add node-sass-chokidar
 ```
 
-然后在 `package.json` 中的 `scripts` 中, 新增以下内容:
+然后在 `package.json` 中的 `scripts` 中, 新增以下内容:
 
 ```diff
    "scripts": {
@@ -472,7 +471,7 @@ yarn add node-sass-chokidar
      "test": "react-scripts test --env=jsdom",
 ```
 
->Note: 如果要用其他的预处理器, 请替换`build-css` 和 `watch-css` 对应的命令.
+>Note: 如果要用其他的预处理器, 请替换`build-css` 和 `watch-css` 对应的命令.
 
 Now you can rename `src/App.css` to `src/App.scss` and run `npm run watch-css`. The watcher will find every Sass file in `src` subdirectories, and create a corresponding CSS file next to it, in our case overwriting `src/App.css`. Since `src/App.js` still imports `src/App.css`, the styles become a part of your application. You can now edit `src/App.scss`, and `src/App.css` will be regenerated.
 
@@ -543,9 +542,9 @@ Now running `npm start` and `npm run build` also builds Sass files.
 
 * 在js中导入资源: 通过 **`import` 的方式. 
 
-与导入 CSS 不同的是, 导入的是图片最终的路径, 这个路径可以在代码中引用, 比如`<img>` 的 `src` 属性 和 `<a>` 的 `href` 属性.
+与导入 CSS 不同的是, 导入的是图片最终的路径, 这个路径可以在代码中引用, 比如`<img>` 的 `src` 属性 和 `<a>` 的 `href` 属性.
 
-为了减少网络请求次数, 导入的图片如果小于 10,000 bytes 会返回 [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) (前缀为 data：scheme 的URL)而不是 path. 以上规则对以下文件扩展名有效: bmp, gif, jpg, jpeg, and png, 不包括 SVG 文件, 因为 [#1153](https://github.com/facebookincubator/create-react-app/issues/1153).
+为了减少网络请求次数, 导入的图片如果小于 10,000 bytes 会返回 [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) (前缀为 data：scheme 的URL)而不是 path. 以上规则对以下文件扩展名有效: bmp, gif, jpg, jpeg, and png, 不包括 SVG 文件, 因为 [#1153](https://github.com/facebookincubator/create-react-app/issues/1153).
 
 举个栗子:
 
@@ -563,7 +562,7 @@ function Header() {
 export default Header;
 ```
 
-这就确保了当project在构建时, Webpack可以把imges移到build文件夹中, 并且提供我们正确的路径.
+这就确保了当project在构建时, Webpack可以把imges移到build文件夹中, 并且提供我们正确的路径.
 
 * 在 CSS 中导入资源:
 
@@ -684,13 +683,13 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 // components takes precedence over default styles.
 ```
 
-在 ```src/App.js``` 中,按需导入 React Bootstrap components  或者你的自定义组件:
+在 ```src/App.js``` 中,按需导入 React Bootstrap components  或者你的自定义组件:
 
 ```js
 import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 ```
 
-现在就可以在你的组件中使用导入的 React Bootstrap 组件了. 具体例子 [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js).
+现在就可以在你的组件中使用导入的 React Bootstrap 组件了. 具体例子 [`App.js`](https://gist.githubusercontent.com/gaearon/85d8c067f6af1e56277c82d19fd4da7b/raw/6158dd991b67284e9fc8d70b9d973efe87659d72/App.js).
 
 ### 使用自定义主题
 
@@ -748,19 +747,27 @@ yarn add react-router-dom
 
 默认有 `NODE_ENV` 以及其他以 `REACT_APP_` 开头的环境变量
 
-**环境变量在构建期间嵌入**. 由于Create React App生成静态HTML / CSS / JS包，因此无法在运行时读取它们. To read them at runtime, you would need to load HTML into memory on the server and replace placeholders in runtime, just like [described here](#injecting-data-from-the-server-into-the-page). 或者 you can rebuild the app on the server anytime you change them.
+**环境变量在构建期间嵌入(injected)**. 由于Create React App生成静态HTML / CSS / JS包，因此无法在运行时读取它们. 如果想在运行时读取, 你需要将HTML加载到server的内存里, 并且在运行时替换占位符, 就像 [described here](#injecting-data-from-the-server-into-the-page). 或者 你在修改了环境变量后在server端进行rebuild.
 
 >Note: 为了避免 [与本机其他环境变量名冲突](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527), 自定义的环境变量必须以 `REACT_APP_` 为开头, 除此之外的其他的变量名(除了 `NODE_ENV`)都会被忽略. 修改环境变量后要重启开发服务器..
 
 这些环境变量将会定义在 `process.env`. 例如 `process.env.REACT_APP_SECRET_CODE`.
 
-这里有个内置的环境变量叫做 `NODE_ENV`. 你可以通过 `process.env.NODE_ENV` 来读取. 当运行 `npm start`, 它等于 `'development'`, 当运行 `npm test` 它等于 `'test'`, 当运行 `npm run build` 它等于 `'production'`. **禁止手动覆盖 `NODE_ENV` 变量.**
+环境变量有什么用? 
+1. 区分环境: 比如区分dev, qa, staging, prod 几个环境;
 
-These environment variables can be useful for displaying information conditionally based on where the project is
-deployed or consuming sensitive data that lives outside of version control.
+比如:
 
-First, you need to have environment variables defined. For example, let’s say you wanted to consume a secret defined
-in the environment inside a `<form>`:
+`NODE_ENV` 是内置的环境变量, 你可以通过 `process.env.NODE_ENV` 来读取. 当运行 `npm start`, 它等于 `'development'`, 当运行 `npm test` 它等于 `'test'`, 当运行 `npm run build` 它等于 `'production'`. **禁止覆盖 `NODE_ENV` 变量.** 它的用法如:
+
+```js
+if (process.env.NODE_ENV !== 'production') {
+  analytics.disable();
+}
+```
+2. 隐藏敏感数据: 为了避免把某些敏感数据上传到git repo, 你可以将其配置到环境变量里;
+
+比如:
 
 ```jsx
 render() {
@@ -775,9 +782,7 @@ render() {
 }
 ```
 
-build过程中, `process.env.REACT_APP_SECRET_CODE` 将会被替换成 `REACT_APP_SECRET_CODE` 的当前值.
-
-When you load the app in the browser and inspect the `<input>`, you will see its value set to `abcdef`, and the bold text will show the environment provided when using `npm start`:
+build过程中, `process.env.REACT_APP_SECRET_CODE` 将会被替换成 `REACT_APP_SECRET_CODE` 的当前值:
 
 ```html
 <div>
@@ -788,25 +793,13 @@ When you load the app in the browser and inspect the `<input>`, you will see its
 </div>
 ```
 
-The above form is looking for a variable called `REACT_APP_SECRET_CODE` from the environment. In order to consume this
-value, we need to have it defined in the environment. This can be done using two ways: either in your shell or in
-a `.env` file. Both of these ways are described in the next few sections.
+以上表单需要从环境变量中寻找 `REACT_APP_SECRET_CODE` 这个变量, 所以得先定义它. 定义环境变量的方式有两种: 在shell中 和 在 `.env` 文件里. 下文会细讲.
 
-Having access to the `NODE_ENV` is also useful for performing actions conditionally:
+### 在 HTML 中引用环境变量
 
-```js
-if (process.env.NODE_ENV !== 'production') {
-  analytics.disable();
-}
-```
+>Note: 需要 `react-scripts@0.9.0` 及更高版本.
 
-When you compile the app with `npm run build`, the minification step will strip out this condition, and the resulting bundle will be smaller.
-
-### Referencing Environment Variables in the HTML
-
->Note: this feature is available with `react-scripts@0.9.0` and higher.
-
-You can also access the environment variables starting with `REACT_APP_` in the `public/index.html`. For example:
+在 `public/index.html` 中可以引用 `REACT_APP_` 开头的环境变量. 举个栗子:
 
 ```html
 <title>%REACT_APP_WEBSITE_NAME%</title>
@@ -814,13 +807,12 @@ You can also access the environment variables starting with `REACT_APP_` in the 
 
 Note that the caveats from the above section apply:
 
-* Apart from a few built-in variables (`NODE_ENV` and `PUBLIC_URL`), variable names must start with `REACT_APP_` to work.
-* The environment variables are injected at build time. If you need to inject them at runtime, [follow this approach instead](#generating-dynamic-meta-tags-on-the-server).
+* 不同于内置的环境变量 (`NODE_ENV` and `PUBLIC_URL`), 自定义的环境变量必须以 `REACT_APP_` 为开头.
+* 环境变量是在构建(build)期注入的, 如果来你想在运行(runtime)期注入, 请参考 [generating dynamic meta tags on the server](#generating-dynamic-meta-tags-on-the-server).
 
-### 在shell中添加临时的环境变量
+### 在shell中定义环境变量(临时的)
 
-定义环境变量可能因操作系统而异。 It’s also important to know that this manner is temporary for the
-life of the shell session.
+定义环境变量可能因操作系统而异, 而且这种方式对于 shell session 来说是暂时的.
 
 #### Windows (cmd.exe)
 
@@ -828,7 +820,7 @@ life of the shell session.
 set "REACT_APP_SECRET_CODE=abcdef" && npm start
 ```
 
-(Note: Quotes around the variable assignment are required to avoid a trailing whitespace.)
+(Note: 给环境变量赋值需要加双引号, 避免后面有空格.)
 
 #### Windows (Powershell)
 
@@ -842,47 +834,45 @@ set "REACT_APP_SECRET_CODE=abcdef" && npm start
 REACT_APP_SECRET_CODE=abcdef npm start
 ```
 
-### 添加开发环境变量 In `.env`
+### 在 `.env` 中定义环境变量(永久的)
 
->Note: this feature is available with `react-scripts@0.5.0` and higher.
+>Note: 需要 `react-scripts@0.5.0` 及更高版本.
 
-To define permanent environment variables, create a file called `.env` in the root of your project:
+这种方式定义的环境变量是永久的(permanent), 首先在项目根目录创建 `.env` 文件
 
 ```
 REACT_APP_SECRET_CODE=abcdef
 ```
->Note: You must create custom environment variables beginning with `REACT_APP_`. Any other variables except `NODE_ENV` will be ignored to avoid [accidentally exposing a private key on the machine that could have the same name](https://github.com/facebookincubator/create-react-app/issues/865#issuecomment-252199527). Changing any environment variables will require you to restart the development server if it is running.
 
-`.env` files **should be** checked into source control (with the exclusion of `.env*.local`).
+`.env` 文件应该放到源码控制中 (排除 `.env*.local`).
 
-#### What other `.env` files can be used?
+#### 使用 `.env` 之外的其他文件定义环境变量
 
->Note: this feature is **available with `react-scripts@1.0.0` and higher**.
+>Note: 这个feature需要 ** `react-scripts@1.0.0` 及更高版本**.
 
-* `.env`: Default.
-* `.env.local`: Local overrides. **This file is loaded for all environments except test.**
-* `.env.development`, `.env.test`, `.env.production`: Environment-specific settings.
-* `.env.development.local`, `.env.test.local`, `.env.production.local`: Local overrides of environment-specific settings.
+* `.env`: 默认.
+* `.env.local`: Local overrides. **适用于除了`test`之外的所有环境.**
+* `.env.development`, `.env.test`, `.env.production`: 针对特定环境.
+* `.env.development.local`, `.env.test.local`, `.env.production.local`: Local overrides, 针对特定环境.
 
-Files on the left have more priority than files on the right:
+从左往右, 文件优先级依次降低
 
 * `npm start`: `.env.development.local`, `.env.development`, `.env.local`, `.env`
 * `npm run build`: `.env.production.local`, `.env.production`, `.env.local`, `.env`
 * `npm test`: `.env.test.local`, `.env.test`, `.env` (note `.env.local` is missing)
 
-These variables will act as the defaults if the machine does not explicitly set them.<br>
-Please refer to the [dotenv documentation](https://github.com/motdotla/dotenv) for more details.
+更多请参考 [dotenv documentation](https://github.com/motdotla/dotenv).
 
->Note: If you are defining environment variables for development, your CI and/or hosting platform will most likely need
-these defined as well. Consult their documentation how to do this. For example, see the documentation for [Travis CI](https://docs.travis-ci.com/user/environment-variables/) or [Heroku](https://devcenter.heroku.com/articles/config-vars).
+>Note: 如果在开发环境定义了环境变量，那么 CI和/或托管平台 可能也需要定义
+。 具体参考它们的文档吧 [Travis CI](https://docs.travis-ci.com/user/environment-variables/) 或 [Heroku](https://devcenter.heroku.com/articles/config-vars).
 
-#### Expanding Environment Variables In `.env`
+#### 在 `.env` 中拓展环境变量
 
->Note: this feature is available with `react-scripts@1.1.0` and higher.
+>Note: 这个feature需要 `react-scripts@1.1.0` 及更高版本.
 
-Expand variables already on your machine for use in your `.env` file (using [dotenv-expand](https://github.com/motdotla/dotenv-expand)).
+拓展已经存在的环境变量 (使用 [dotenv-expand](https://github.com/motdotla/dotenv-expand)).
 
-For example, to get the environment variable `npm_package_version`:
+例如获取环境变量 `npm_package_version`:
 
 ```
 REACT_APP_VERSION=$npm_package_version
@@ -890,7 +880,7 @@ REACT_APP_VERSION=$npm_package_version
 # REACT_APP_VERSION=${npm_package_version}
 ```
 
-Or expand variables local to the current `.env` file:
+或者拓展在 `.env` 声明的变量:
 
 ```
 DOMAIN=www.example.com
@@ -898,10 +888,10 @@ REACT_APP_FOO=$DOMAIN/foo
 REACT_APP_BAR=$DOMAIN/bar
 ```
 
-## 能用 Decorators 吗?
+## 支持 Decorators 吗?
 
-Many popular libraries use [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841) in their documentation.<br>
-Create React App doesn’t support decorator syntax at the moment because:
+许多流行的lib在文档中使用 [decorators](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841).<br>
+Create React App 当前不支持 decorator 语法, 原因如下:
 
 * It is an experimental proposal and is subject to change.
 * The current specification version is not officially supported by Babel.
@@ -927,7 +917,7 @@ You can learn more about making AJAX requests from React components in [the FAQ 
 
 ## Integrating with an API Backend
 
-These tutorials will help you to integrate your app with an API backend running on another port,
+帮助你的APP集成运行在其他端口上的 API backend ,
 using `fetch()` to access it.
 
 ### Node
@@ -941,7 +931,7 @@ You can find the companion GitHub repository [here](https://github.com/fullstack
 
 ## Proxying API Requests in Development
 
->Note: this feature is available with `react-scripts@0.2.3` and higher.
+>Note: 这个feature需要 `react-scripts@0.2.3` 及以上版本.
 
 People often serve the front-end React app from the same host and port as their backend implementation.<br>
 For example, a production setup might look like this after the app is deployed:
@@ -1001,11 +991,11 @@ If you are still having issues or if you’re using a more exotic environment li
 DANGEROUSLY_DISABLE_HOST_CHECK=true
 ```
 
-We don’t recommend this approach.
+我们不推荐这种方式.
 
 ### Configuring the Proxy Manually
 
->Note: this feature is available with `react-scripts@1.0.0` and higher.
+>Note: 这个feature需要 `react-scripts@1.0.0` 及以上版本.
 
 If the `proxy` option is **not** flexible enough for you, you can specify an object in the following form (in `package.json`).<br>
 You may also specify any configuration value [`http-proxy-middleware`](https://github.com/chimurai/http-proxy-middleware#options) or [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options) supports.
@@ -1091,9 +1081,9 @@ Either way, you can proxy WebSocket requests manually in `package.json`:
 }
 ```
 
-## 在开发中使用HTTPS
+## 在开发环境使用HTTPS
 
->Note: this feature is available with `react-scripts@0.4.0` and higher.
+>Note: 这个feature需要 `react-scripts@0.4.0` 及以上版本.
 
 You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](#proxying-api-requests-in-development) to proxy requests to an API server when that API server is itself serving HTTPS.
 
@@ -1164,7 +1154,7 @@ Then, on the server, you can replace `__SERVER_DATA__` with a JSON of real data 
 
 ## Running Tests
 
->Note: this feature is available with `react-scripts@0.3.0` and higher.<br>
+>Note: 这个feature需要 `react-scripts@0.3.0` 及以上版本.<br>
 >[Read the migration guide to learn how to enable it in older projects!](https://github.com/facebookincubator/create-react-app/blob/master/CHANGELOG.md#migrating-from-023-to-030)
 
 Create React App uses [Jest](https://facebook.github.io/jest/) as its test runner. To prepare for this integration, we did a [major revamp](https://facebook.github.io/jest/blog/2016/09/01/jest-15.html) of Jest so if you heard bad things about it years ago, give it another try.
@@ -1341,7 +1331,7 @@ and then use them in your tests like you normally do.
 
 ### 初始化测试环境
 
->Note: this feature is available with `react-scripts@0.4.0` and higher.
+>Note: 这个feature需要 `react-scripts@0.4.0` 及以上版本.
 
 If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
 
@@ -1822,16 +1812,14 @@ npm run analyze
 
 ### 静态服务器
 
-For environments using [Node](https://nodejs.org/), the easiest way to handle this would be to install [serve](https://github.com/zeit/serve) and let it handle the rest:
+如果是使用 [Node](https://nodejs.org/) 环境, 最简单的方式就是安装使用 [serve](https://github.com/zeit/serve) :
 
 ```sh
 npm install -g serve
 serve -s build
 ```
 
-The last command shown above will serve your static site on the port **5000**. Like many of [serve](https://github.com/zeit/serve)’s internal settings, the port can be adjusted using the `-p` or `--port` flags.
-
-Run this command to get a full list of the options available:
+以上最后一句命令, 就是使用 [serve](https://github.com/zeit/serve) 在 **5000** 端口开启静态服务器. 可以使用 `-p` 或 `--port` 修改端口. 具体使用方式请运行以下命令查看:
 
 ```sh
 serve -h
@@ -1839,9 +1827,9 @@ serve -h
 
 ### 其它方案
 
-You don’t necessarily need a static server in order to run a Create React App project in production. It works just as fine integrated into an existing dynamic one.
+在生产中部署Create React App项目不一定非得使用静态服务器, 集成到现有的动态服务器中也是一种好的方案.
 
-Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](http://expressjs.com/):
+下面是使用 [Node](https://nodejs.org/) 和 [Express](http://expressjs.com/)的一个例子:
 
 ```javascript
 const express = require('express');
@@ -1857,13 +1845,13 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
-The choice of your server software isn’t important either. Since Create React App is completely platform-agnostic, there’s no need to explicitly use Node.
+你选择的服务器软件也不是很重要. 因为 Create React App 完全与平台无关, 也没有必要非得使用Node.
 
-The `build` folder with static assets is the only output produced by Create React App.
+含有静态资源的 `build` 文件夹是 Create React App 是唯一的输出.
 
-However this is not quite enough if you use client-side routing. Read the next section if you want to support URLs like `/todos/42` in your single-page app.
+如果你在用客户端路由(client-side routing)App, 以上方案是不够的. 如果想在单页应用中使用类似 `/todos/42` 的URL, 请继续看下一节.
 
-### Serving Apps with Client-Side Routing
+### Serving 客户端路由(Client-Side Routing)的Apps
 
 If you use routers that use the HTML5 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`), many static file servers will fail. For example, if you used React Router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but an Express serving a production build as above will not.
 
@@ -1878,7 +1866,7 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
  });
 ```
 
-If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to create a `.htaccess` file in the `public` folder that looks like this:
+如果用的是 [Apache HTTP Server](https://httpd.apache.org/), 你需要在 `public` 文件夹中创建 `.htaccess` 文件, that looks like this:
 
 ```
     Options -MultiViews
@@ -1930,7 +1918,7 @@ For example:
 
 #### Serving the Same Build from Different Paths
 
->Note: this feature is available with `react-scripts@0.9.0` and higher.
+>Note: 这个feature需要 `react-scripts@0.9.0` 及以上版本.
 
 If you are not using the HTML5 `pushState` history API or not using client-side routing at all, it is unnecessary to specify the URL from which your app will be served. Instead, you can put this in your `package.json`:
 
@@ -2021,7 +2009,7 @@ For more information see [Add Firebase to your JavaScript Project](https://fireb
 
 ### [GitHub Pages](https://pages.github.com/)
 
->Note: this feature is available with `react-scripts@0.2.0` and higher.
+>Note: 这个feature需要 `react-scripts@0.2.0` 及以上版本.
 
 #### Step 1: Add `homepage` to `package.json`
 
@@ -2221,7 +2209,7 @@ When asked about the project path, make sure to specify the `build` folder, for 
 
 Note that in order to support routers that use HTML5 `pushState` API, you may want to rename the `index.html` in your build folder to `200.html` before deploying to Surge. This [ensures that every URL falls back to that file](https://surge.sh/help/adding-a-200-page-for-client-side-routing).
 
-## Advanced Configuration
+## 高级配置
 
 You can adjust various development and production settings by setting environment variables in your shell or with [.env](#adding-development-environment-variables-in-env).
 
