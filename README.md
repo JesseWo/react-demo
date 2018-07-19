@@ -77,7 +77,7 @@
 - [Analyzing the Bundle Size](#analyzing-the-bundle-size)
 - [部署](#部署)
   - [静态服务器](#静态服务器)
-  - [Other Solutions](#other-solutions)
+  - [其它方案](#其它方案)
   - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing)
   - [Building for Relative Paths](#building-for-relative-paths)
   - [Azure](#azure)
@@ -1853,7 +1853,7 @@ app.listen(9000);
 
 ### Serving 客户端路由(Client-Side Routing)的Apps
 
-If you use routers that use the HTML5 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`), many static file servers will fail. For example, if you used React Router with a route for `/todos/42`, the development server will respond to `localhost:3000/todos/42` properly, but an Express serving a production build as above will not.
+如果你用 H5的 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`) 做路由, 许多静态服务器会失败. For example, if you used React Router with a route for `/todos/42`, 开发服务器会正确的指向 `localhost:3000/todos/42`, 但是上面的Express就不会.
 
 This is because when there is a fresh page load for a `/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`. For example, we can amend our Express example above to serve `index.html` for any unknown paths:
 
@@ -1875,11 +1875,11 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+`npm run build` 构建时, 它会被复制到 `build` 文件夹下. 
 
-If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
+如果用的是 [Apache Tomcat](http://tomcat.apache.org/), 你需要参照 [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 
-Now requests to `/todos/42` will be handled correctly both in development and in production.
+现在请求 `/todos/42` 不论是在开发环境还是生产环境, 就都能被正确处理了.
 
 On a production build, and in a browser that supports [service workers](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers),
 the service worker will automatically handle all navigation requests, like for
@@ -1890,7 +1890,7 @@ service worker navigation routing can be configured or disabled by
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
-When users install your app to the homescreen of their device the default configuration will make a shortcut to `/index.html`. This may not work for client-side routers which expect the app to be served from `/`. Edit the web app manifest at [`public/manifest.json`](public/manifest.json) and change `start_url` to match the required URL scheme, for example:
+当用户把你的app安装到设备的主屏幕上时, 默认的配置将会创建一个指向 `/index.html` 的快捷方式. 这对于客户端路由的APP(expect the app to be served from `/`)来说就不行了, 编辑 web app 的清单文件[`public/manifest.json`](public/manifest.json) 修改 `start_url` 字段, 例如:
 
 ```js
   "start_url": ".",
@@ -1920,7 +1920,7 @@ For example:
 
 >Note: 这个feature需要 `react-scripts@0.9.0` 及以上版本.
 
-If you are not using the HTML5 `pushState` history API or not using client-side routing at all, it is unnecessary to specify the URL from which your app will be served. Instead, you can put this in your `package.json`:
+如果你既没有使用 HTML5 `pushState` history API 也没有使用客户端路由 (client-side routing), 就没有必要指明你的app服务的URL了. 相反你可以把它放到  `package.json`:
 
 ```js
   "homepage": ".",
