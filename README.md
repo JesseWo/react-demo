@@ -905,36 +905,38 @@ Please refer to these two threads for reference:
 
 Create React App will add decorator support when the specification advances to a stable stage.
 
-## Fetching Data with AJAX Requests
+## 网络请求(Fetching Data with AJAX Requests)
 
-React doesn't prescribe a specific approach to data fetching, but people commonly use either a library like [axios](https://github.com/axios/axios) or the [`fetch()` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) provided by the browser. Conveniently, Create React App includes a polyfill for `fetch()` so you can use it without worrying about the browser support.
+React 没有特别指定 fetching data 的方式, 但是通常要么使用浏览器提供的 [`fetch()` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) , 要么使用 [axios](https://github.com/axios/axios) 等第三方lib. Create React App 支持(polyfill) `fetch()` , 所以不用担心浏览器的支持问题.
 
-The global `fetch` function allows to easily makes AJAX requests. It takes in a URL as an input and returns a `Promise` that resolves to a `Response` object. You can find more information about `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
+>polyfill: In web development, a polyfill (or polyfiller) is additional code which provides facilities that are not built into a web browser.
 
-This project also includes a [Promise polyfill](https://github.com/then/promise) which provides a full implementation of Promises/A+. A Promise represents the eventual result of an asynchronous operation, you can find more information about Promises [here](https://www.promisejs.org/) and [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). Both axios and `fetch()` use Promises under the hood. You can also use the [`async / await`](https://davidwalsh.name/async-await) syntax to reduce the callback nesting.
+* 关于 `fetch` [here](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch).
 
-You can learn more about making AJAX requests from React components in [the FAQ entry on the React website](https://reactjs.org/docs/faq-ajax.html).
+* 同时支持 [Promise polyfill](https://github.com/then/promise). 更多关于 Promises 请参考[promisejs.org](https://www.promisejs.org/) 和 [mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise). axios 和 `fetch()` 都用了 Promises. 
+* 你也可以用 [`async / await`](https://davidwalsh.name/async-await) 语法来减少回调嵌套.
+
+* 参考 [React官网: 在React组件中发起 AJAX requests](https://reactjs.org/docs/faq-ajax.html).
 
 ## Integrating with an API Backend
 
-帮助你的APP集成运行在其他端口上的 API backend ,
-using `fetch()` to access it.
+帮助你的APP集成运行在其他端口上的 后端API接口, 这些接口可以用 `fetch()` 访问.
 
 ### Node
-Check out [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
+查看 [this tutorial](https://www.fullstackreact.com/articles/using-create-react-app-with-a-server/).
 You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo).
 
 ### Ruby on Rails
 
-Check out [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/).
+查看 [this tutorial](https://www.fullstackreact.com/articles/how-to-get-create-react-app-to-work-with-your-rails-api/).
 You can find the companion GitHub repository [here](https://github.com/fullstackreact/food-lookup-demo-rails).
 
-## Proxying API Requests in Development
+## 在开发环境中代理 API 请求
 
 >Note: 这个feature需要 `react-scripts@0.2.3` 及以上版本.
 
-People often serve the front-end React app from the same host and port as their backend implementation.<br>
-For example, a production setup might look like this after the app is deployed:
+通常将前端的 React app 和后端接口使用同样的 host and port.<br>
+例如, app部署完后, 生产配置可能如下所示:
 
 ```
 /             - static server returns index.html with React app
@@ -942,46 +944,46 @@ For example, a production setup might look like this after the app is deployed:
 /api/todos    - server handles any /api/* requests using the backend implementation
 ```
 
-Such setup is **not** required. However, if you **do** have a setup like this, it is convenient to write requests like `fetch('/api/todos')` without worrying about redirecting them to another host or port during development.
+这种配置 **不是** 必须的. 当然如果你这样配置的话, 用 `fetch('/api/todos')` 这种方式写请求就会非常方便了, 而不用担心在开发环境中重定向到其他的host或者port上.
 
-To tell the development server to proxy any unknown requests to your API server in development, add a `proxy` field to your `package.json`, for example:
+在 `package.json` 中添加 `proxy` 字段, 以告诉开发服务器将所有未知请求代理到开发环境中的API服务器. 具体如下:
 
 ```js
   "proxy": "http://localhost:4000",
 ```
 
-This way, when you `fetch('/api/todos')` in development, the development server will recognize that it’s not a static asset, and will proxy your request to `http://localhost:4000/api/todos` as a fallback. The development server will **only** attempt to send requests without `text/html` in its `Accept` header to the proxy.
+如此, 当你在开发环境中 `fetch('/api/todos')` 时, development server 就不会把它当做静态资源, 然后转发到 `http://localhost:4000/api/todos`. development server **仅仅** 把 `Accept` header 中没有`text/html` 的请求转发给给 proxy server.
 
-Conveniently, this avoids [CORS issues](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations) and error messages like this in development:
+以上可以方便的在开发环境中避免类似下面的 [跨域(CORS) 问题](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations):
 
 ```
 Fetch API cannot load http://localhost:4000/api/todos. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:3000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 ```
 
-Keep in mind that `proxy` only has effect in development (with `npm start`), and it is up to you to ensure that URLs like `/api/todos` point to the right thing in production. You don’t have to use the `/api` prefix. Any unrecognized request without a `text/html` accept header will be redirected to the specified `proxy`.
+请注意 `proxy` 仅在开发环境有效 (运行 `npm start`). 您不必使用 `/api` 前缀, 没有 `text/html` accept header的任何无法识别的请求都将被重定向到指定的代理。
 
-The `proxy` option supports HTTP, HTTPS and WebSocket connections.<br>
-If the `proxy` option is **not** flexible enough for you, alternatively you can:
+`proxy` 选项支持 HTTP, HTTPS 和 WebSocket.<br>
+除了以上 `proxy` 的方式, 你还可以:
 
-* [Configure the proxy yourself](#configuring-the-proxy-manually)
-* Enable CORS on your server ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
-* Use [environment variables](#adding-custom-environment-variables) to inject the right server host and port into your app.
+* [手动配置代理](#手动配置代理)
+* server 端开启CORS支持 ([here’s how to do it for Express](http://enable-cors.org/server_expressjs.html)).
+* 用 [环境变量](#adding-custom-environment-variables) 在app中注入正确的server host 和 port.
 
-### "Invalid Host Header" Errors After Configuring Proxy
+### 配置代理后 "Invalid Host Header" 错误
 
 When you enable the `proxy` option, you opt into a more strict set of host checks. This is necessary because leaving the backend open to remote hosts makes your computer vulnerable to DNS rebinding attacks. The issue is explained in [this article](https://medium.com/webpack/webpack-dev-server-middleware-security-issues-1489d950874a) and [this issue](https://github.com/webpack/webpack-dev-server/issues/887).
 
-This shouldn’t affect you when developing on `localhost`, but if you develop remotely like [described here](https://github.com/facebookincubator/create-react-app/issues/2271), you will see this error in the browser after enabling the `proxy` option:
+开启 `proxy` 选项, 对于本地开发 `localhost` 没有影响, 但你如果像 [issues/2271](https://github.com/facebookincubator/create-react-app/issues/2271) 描述的那样进行远程开发, 就会在浏览器中看到这个错误:
 
 >Invalid Host header
 
-To work around it, you can specify your public development host in a file called `.env.development` in the root of your project:
+要解决此问题，你可以在项目根目录中名为 `.env.development` 的文件中指定public development host：
 
 ```
 HOST=mypublicdevhost.com
 ```
 
-If you restart the development server now and load the app from the specified host, it should work.
+如果现在重启开发服务器并从指定的主机加载APP，应该没问题了。
 
 If you are still having issues or if you’re using a more exotic environment like a cloud editor, you can bypass the host check completely by adding a line to `.env.development.local`. **Note that this is dangerous and exposes your machine to remote code execution from malicious websites:**
 
@@ -993,12 +995,11 @@ DANGEROUSLY_DISABLE_HOST_CHECK=true
 
 我们不推荐这种方式.
 
-### Configuring the Proxy Manually
+### 手动配置代理
 
 >Note: 这个feature需要 `react-scripts@1.0.0` 及以上版本.
 
-If the `proxy` option is **not** flexible enough for you, you can specify an object in the following form (in `package.json`).<br>
-You may also specify any configuration value [`http-proxy-middleware`](https://github.com/chimurai/http-proxy-middleware#options) or [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options) supports.
+如下所示, 在 `package.json` 中, 可配置的值 [`http-proxy-middleware`](https://github.com/chimurai/http-proxy-middleware#options) or [`http-proxy`](https://github.com/nodejitsu/node-http-proxy#options).
 ```js
 {
   // ...
@@ -1013,10 +1014,9 @@ You may also specify any configuration value [`http-proxy-middleware`](https://g
 }
 ```
 
-All requests matching this path will be proxies, no exceptions. This includes requests for `text/html`, which the standard `proxy` option does not proxy.
+匹配到path的所有请求都会被代理, 包括对于 `text/html` 的请求 (标准的 `proxy` 选项则不会代理).
 
-If you need to specify multiple proxies, you may do so by specifying additional entries.
-Matches are regular expressions, so that you can use a regexp to match multiple paths.
+可以用正则匹配多个路径
 ```js
 {
   // ...
@@ -1085,9 +1085,9 @@ Either way, you can proxy WebSocket requests manually in `package.json`:
 
 >Note: 这个feature需要 `react-scripts@0.4.0` 及以上版本.
 
-You may require the dev server to serve pages over HTTPS. One particular case where this could be useful is when using [the "proxy" feature](#proxying-api-requests-in-development) to proxy requests to an API server when that API server is itself serving HTTPS.
+ 这个特殊需求场景是: 当使用 [“代理”功能](#proxying-api-requests-in-development) 将请求代理到API服务器, 而API服务器本身就用HTTPS时, 您可能需要给开发服务器配置HTTP.
 
-To do this, set the `HTTPS` environment variable to `true`, then start the dev server as usual with `npm start`:
+设置 `HTTPS` 环境变量为 `true`, 然后 `npm start` 启动 dev server:
 
 #### Windows (cmd.exe)
 
@@ -1109,7 +1109,7 @@ set HTTPS=true&&npm start
 HTTPS=true npm start
 ```
 
-Note that the server will use a self-signed certificate, so your web browser will almost definitely display a warning upon accessing the page.
+请注意 server 将会使用自签名证书, 因此在访问该页面时浏览器会显示警告.
 
 ## Generating Dynamic `<meta>` Tags on the Server
 
@@ -1139,7 +1139,7 @@ You can read more about [zero-configuration pre-rendering (also called snapshott
 
 ## Injecting Data from the Server into the Page
 
-Similarly to the previous section, you can leave some placeholders in the HTML that inject global variables, for example:
+Similarly to the previous section, you can leave some placeholders in the HTML that inject global variables, 举个栗子:
 
 ```js
 <!doctype html>
@@ -1335,7 +1335,7 @@ and then use them in your tests like you normally do.
 
 If your app uses a browser API that you need to mock in your tests or if you just need a global setup before running your tests, add a `src/setupTests.js` to your project. It will be automatically executed before running your tests.
 
-For example:
+举个栗子:
 
 #### `src/setupTests.js`
 ```js
@@ -1819,7 +1819,7 @@ npm install -g serve
 serve -s build
 ```
 
-以上最后一句命令, 就是使用 [serve](https://github.com/zeit/serve) 在 **5000** 端口开启静态服务器. 可以使用 `-p` 或 `--port` 修改端口. 具体使用方式请运行以下命令查看:
+以上最后一句命令, 就是使用 [serve](https://github.com/zeit/serve) 在 **5000** 端口开启static server. 可以使用 `-p` 或 `--port` 修改端口. 具体使用方式请运行以下命令查看:
 
 ```sh
 serve -h
@@ -1827,7 +1827,7 @@ serve -h
 
 ### 其它方案
 
-在生产中部署Create React App项目不一定非得使用静态服务器, 集成到现有的动态服务器中也是一种好的方案.
+在生产中部署Create React App项目不一定非得使用static server, 集成到现有的 API server 中也是不错的方案.
 
 下面是使用 [Node](https://nodejs.org/) 和 [Express](http://expressjs.com/)的一个例子:
 
@@ -1845,17 +1845,17 @@ app.get('/', function (req, res) {
 app.listen(9000);
 ```
 
-你选择的服务器软件也不是很重要. 因为 Create React App 完全与平台无关, 也没有必要非得使用Node.
+你选择的服务器软件也不是很重要. 由于 Create React App 完全与平台无关, 也没有必要非得使用Node.
 
 含有静态资源的 `build` 文件夹是 Create React App 是唯一的输出.
 
 如果你在用客户端路由(client-side routing)App, 以上方案是不够的. 如果想在单页应用中使用类似 `/todos/42` 的URL, 请继续看下一节.
 
-### Serving 客户端路由(Client-Side Routing)的Apps
+### 服务客户端路由(Client-Side Routing)的Apps
 
-如果你用 H5的 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) under the hood (for example, [React Router](https://github.com/ReactTraining/react-router) with `browserHistory`) 做路由, 许多静态服务器会失败. For example, if you used React Router with a route for `/todos/42`, 开发服务器会正确的指向 `localhost:3000/todos/42`, 但是上面的Express就不会.
+如果你底层用 H5的 [`pushState` history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API#Adding_and_modifying_history_entries) (例如 [React Router](https://github.com/ReactTraining/react-router) 的 `browserHistory`) 做路由, 许多静态服务器会失败. 例如, 如果你用 React Router 路由到 `/todos/42`, 开发服务器会正确的指向 `localhost:3000/todos/42`, 但是上面的Express就不会.
 
-This is because when there is a fresh page load for a `/todos/42`, the server looks for the file `build/todos/42` and does not find it. The server needs to be configured to respond to a request to `/todos/42` by serving `index.html`. For example, we can amend our Express example above to serve `index.html` for any unknown paths:
+这是因为当有页面刷新指向 `/todos/42` 时, 服务器就会寻找 `build/todos/42` 文件但是找不到它. 因此需要配置服务器响应`index.html` 给来自 `/todos/42` 的请求 . 例如我们可以修改上面的 Express 例子, 给所有未知路径响应 `index.html` :
 
 ```diff
  app.use(express.static(path.join(__dirname, 'build')));
@@ -1866,7 +1866,7 @@ This is because when there is a fresh page load for a `/todos/42`, the server lo
  });
 ```
 
-如果用的是 [Apache HTTP Server](https://httpd.apache.org/), 你需要在 `public` 文件夹中创建 `.htaccess` 文件, that looks like this:
+如果用的是 [Apache HTTP Server](https://httpd.apache.org/), 你需要在 `public` 文件夹中创建 `.htaccess` 文件, 如下所示:
 
 ```
     Options -MultiViews
@@ -1890,7 +1890,7 @@ service worker navigation routing can be configured or disabled by
 and [`navigateFallbackWhitelist`](https://github.com/GoogleChrome/sw-precache#navigatefallbackwhitelist-arrayregexp)
 options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.js).
 
-当用户把你的app安装到设备的主屏幕上时, 默认的配置将会创建一个指向 `/index.html` 的快捷方式. 这对于客户端路由的APP(expect the app to be served from `/`)来说就不行了, 编辑 web app 的清单文件[`public/manifest.json`](public/manifest.json) 修改 `start_url` 字段, 例如:
+当用户把你的app安装到设备的主屏幕上时, 默认的配置将会创建一个指向 `/index.html` 的快捷方式. 这对于客户端路由的APP(expect the app to be served from `/`)来说就不行了, 编辑 web app 的清单文件[`public/manifest.json`](public/manifest.json) 修改 `start_url` 字段, 例如:
 
 ```js
   "start_url": ".",
@@ -1899,7 +1899,7 @@ options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.j
 ### Building for Relative Paths
 
 By default, Create React App produces a build assuming your app is hosted at the server root.<br>
-To override this, specify the `homepage` in your `package.json`, for example:
+To override this, specify the `homepage` in your `package.json`, 举个栗子:
 
 ```js
   "homepage": "http://mywebsite.com/relativepath",
@@ -1910,7 +1910,7 @@ This will let Create React App correctly infer the root path to use in the gener
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
 More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
 <br>
-For example:
+举个栗子:
 ```js
 <BrowserRouter basename="/calendar"/>
 <Link to="/today"/> // renders <a href="/calendar/today">
@@ -1920,7 +1920,7 @@ For example:
 
 >Note: 这个feature需要 `react-scripts@0.9.0` 及以上版本.
 
-如果你既没有使用 HTML5 `pushState` history API 也没有使用客户端路由 (client-side routing), 就没有必要指明你的app服务的URL了. 相反你可以把它放到  `package.json`:
+如果你既没有使用 HTML5 `pushState` history API 也没有使用客户端路由 (client-side routing), 就没有必要指明你的app服务的URL了. 相反你可以把它放到  `package.json`:
 
 ```js
   "homepage": ".",
@@ -2201,7 +2201,7 @@ See this [blog post](https://medium.com/@omgwtfmarc/deploying-create-react-app-t
 
 Install the Surge CLI if you haven’t already by running `npm install -g surge`. Run the `surge` command and log in you or create a new account.
 
-When asked about the project path, make sure to specify the `build` folder, for example:
+When asked about the project path, make sure to specify the `build` folder, 举个栗子:
 
 ```sh
        project path: /path/to/project/build
@@ -2284,7 +2284,7 @@ Please refer to [this section](#resolving-heroku-deployment-errors).
 If you use a [Moment.js](https://momentjs.com/), you might notice that only the English locale is available by default. This is because the locale files are large, and you probably only need a subset of [all the locales provided by Moment.js](https://momentjs.com/#multiple-locale-support).
 
 To add a specific Moment.js locale to your bundle, you need to import it explicitly.<br>
-For example:
+举个栗子:
 
 ```js
 import moment from 'moment';
