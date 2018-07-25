@@ -37,15 +37,15 @@
   - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell)
   - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env)
 - [支持 Decorators 吗?](#支持-Decorators-吗?)
-- [Fetching Data with AJAX Requests](#fetching-data-with-ajax-requests)
+- [网络请求(Fetching Data with AJAX Requests)](#网络请求(Fetching-Data-with-AJAX-Requests))
 - [Integrating with an API Backend](#integrating-with-an-api-backend)
   - [Node](#node)
   - [Ruby on Rails](#ruby-on-rails)
-- [Proxying API Requests in Development](#proxying-api-requests-in-development)
+- [在开发环境中代理 API 请求](#在开发环境中代理-API-请求)
   - ["Invalid Host Header" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy)
   - [Configuring the Proxy Manually](#configuring-the-proxy-manually)
   - [Configuring a WebSocket Proxy](#configuring-a-websocket-proxy)
-- [Using HTTPS in Development](#using-https-in-development)
+- [在开发环境使用HTTPS](#在开发环境使用HTTPS)
 - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server)
 - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files)
 - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page)
@@ -66,11 +66,11 @@
 - [Debugging Tests](#debugging-tests)
   - [Debugging Tests in Chrome](#debugging-tests-in-chrome)
   - [Debugging Tests in Visual Studio Code](#debugging-tests-in-visual-studio-code)
-- [Developing Components in Isolation](#developing-components-in-isolation)
-  - [Getting Started with Storybook](#getting-started-with-storybook)
-  - [Getting Started with Styleguidist](#getting-started-with-styleguidist)
-- [Publishing Components to npm](#publishing-components-to-npm)
-- [Making a Progressive Web App](#making-a-progressive-web-app)
+- [单独开发组件](#单独开发组件)
+  - [Storybook](#Storybook-简介)
+  - [Styleguidist](#Styleguidist-简介)
+- [发布 Components 到 npm](#发布-Components-到-npm)
+- [制作PWA应用 (Progressive Web App)](#制作PWA应用-(Progressive-Web-App))
   - [Opting Out of Caching](#opting-out-of-caching)
   - [Offline-First Considerations](#offline-first-considerations)
   - [Progressive Web App Metadata](#progressive-web-app-metadata)
@@ -499,7 +499,7 @@ As a final step, you may find it convenient to run `watch-css` automatically wit
 npm install --save npm-run-all
 ```
 
-Alternatively you may use `yarn`:
+或者用 `yarn`:
 
 ```sh
 yarn add npm-run-all
@@ -1138,7 +1138,7 @@ The primary benefit of pre-rendering is that you get the core content of each pa
 
 You can read more about [zero-configuration pre-rendering (also called snapshotting) here](https://medium.com/superhighfives/an-almost-static-stack-6df0a2791319).
 
-## Injecting Data from the Server into the Page
+## 把从server获取的数据注入到页面中
 
 Similarly to the previous section, you can leave some placeholders in the HTML that inject global variables, 举个栗子:
 
@@ -1239,7 +1239,7 @@ If you’d like to test components in isolation from the child components they r
 npm install --save enzyme enzyme-adapter-react-16 react-test-renderer
 ```
 
-Alternatively you may use `yarn`:
+或者用 `yarn`:
 
 ```sh
 yarn add enzyme enzyme-adapter-react-16 react-test-renderer
@@ -1476,7 +1476,7 @@ The test command will force Jest to run tests once instead of launching the watc
 
 The build command will check for linter warnings and fail if any are found.
 
-### Disabling jsdom
+### 禁用 jsdom
 
 By default, the `package.json` of the generated project looks like this:
 
@@ -1515,9 +1515,9 @@ Finally, jsdom is also not needed for [snapshot testing](http://facebook.github.
 
 Snapshot testing is a feature of Jest that automatically generates text snapshots of your components and saves them on the disk so if the UI output changes, you get notified without manually writing any assertions on the component output. [Read more about snapshot testing.](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html)
 
-### Editor Integration
+### 编辑器集成
 
-If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
+如果你用 [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 
@@ -1580,65 +1580,65 @@ Use the following [`launch.json`](https://code.visualstudio.com/docs/editor/debu
 }
 ```
 
-## Developing Components in Isolation
+## 单独开发组件
 
-Usually, in an app, you have a lot of UI components, and each of them has many different states.
-For an example, a simple button component could have following states:
+通常，APP中有许多UI组件，并且每个组件都有许多不同的状态。
+例如，一个简单的按钮组件可能具有以下状态：
 
-* In a regular state, with a text label.
-* In the disabled mode.
-* In a loading state.
+* normal.
+* disabled.
+* loading.
 
-Usually, it’s hard to see these states without running a sample app or some examples.
+通常，如果没有运行示例应用程序，就很难看到这些状态。
 
-Create React App doesn’t include any tools for this by default, but you can easily add [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) or [React Styleguidist](https://react-styleguidist.js.org/) ([source](https://github.com/styleguidist/react-styleguidist)) to your project. **These are third-party tools that let you develop components and see all their states in isolation from your app**.
+Create React App 默认不包含任何工具, 但是你可以使用 [Storybook for React](https://storybook.js.org) ([source](https://github.com/storybooks/storybook)) 或 [React Styleguidist](https://react-styleguidist.js.org/) ([source](https://github.com/styleguidist/react-styleguidist)) 等**第三方的工具, 独立于App进行组件的开发并且查看所有的状态**.
 
 ![Storybook for React Demo](http://i.imgur.com/7CIAWpB.gif)
 
-You can also deploy your Storybook or style guide as a static app. This way, everyone in your team can view and review different states of UI components without starting a backend server or creating an account in your app.
+您还可以将Storybook或style guide部署为静态APP。这样，团队中的每个人都可以查看和检查UI组件的不同状态，而无需启动后端服务器或在应用中创建帐户。
 
-### Getting Started with Storybook
+### Storybook 简介
 
-Storybook is a development environment for React UI components. It allows you to browse a component library, view the different states of each component, and interactively develop and test components.
+Storybook 是 React UI 组件的开发环境, 它允许你浏览组件库，查看每个组件的不同状态，以及交互式开发和测试组件。
 
-First, install the following npm package globally:
+首先,全局安装:
 
 ```sh
 npm install -g @storybook/cli
 ```
 
-Then, run the following command inside your app’s directory:
+然后在APP目录下运行以下命令:
 
 ```sh
 getstorybook
 ```
 
-After that, follow the instructions on the screen.
+之后，按照屏幕上的说明进行操作。
 
-Learn more about React Storybook:
+更多关于 React Storybook 的用法:
 
 * Screencast: [Getting Started with React Storybook](https://egghead.io/lessons/react-getting-started-with-react-storybook)
 * [GitHub Repo](https://github.com/storybooks/storybook)
 * [Documentation](https://storybook.js.org/basics/introduction/)
 * [Snapshot Testing UI](https://github.com/storybooks/storybook/tree/master/addons/storyshots) with Storybook + addon/storyshot
 
-### Getting Started with Styleguidist
+### Styleguidist 简介
 
-Styleguidist combines a style guide, where all your components are presented on a single page with their props documentation and usage examples, with an environment for developing components in isolation, similar to Storybook. In Styleguidist you write examples in Markdown, where each code snippet is rendered as a live editable playground.
+Styleguidist结合了一个样式指南，其中所有组件都在一个页面上显示，包含 props 文档和用例以及一个单独开发组件的环境，类似于Storybook。 在Styleguidist中，您可以在Markdown中编写示例，其中每个代码段都实时可编辑(each code snippet is rendered as a live editable playground)。
 
-First, install Styleguidist:
+首先安装 Styleguidist:
 
 ```sh
 npm install --save react-styleguidist
 ```
 
-Alternatively you may use `yarn`:
+或者用 `yarn`:
 
 ```sh
 yarn add react-styleguidist
 ```
 
-Then, add these scripts to your `package.json`:
+然后在 `package.json` 中添加脚本:
 
 ```diff
    "scripts": {
@@ -1647,15 +1647,15 @@ Then, add these scripts to your `package.json`:
      "start": "react-scripts start",
 ```
 
-Then, run the following command inside your app’s directory:
+然后在APP目录下运行以下命令:
 
 ```sh
 npm run styleguide
 ```
 
-After that, follow the instructions on the screen.
+之后，按照屏幕上的说明进行操作。
 
-Learn more about React Styleguidist:
+更多关于 React Styleguidist 的用法:
 
 * [GitHub Repo](https://github.com/styleguidist/react-styleguidist)
 * [Documentation](https://react-styleguidist.js.org/docs/getting-started.html)
@@ -1771,7 +1771,7 @@ icons, names, and branding colors to use when the web app is displayed.
 provides more context about what each field means, and how your customizations
 will affect your users' experience.
 
-## Analyzing the Bundle Size
+## 分析 Bundle Size
 
 [Source map explorer](https://www.npmjs.com/package/source-map-explorer) analyzes
 JavaScript bundles using the source maps. This helps you understand where code
@@ -1783,7 +1783,7 @@ To add Source map explorer to a Create React App project, follow these steps:
 npm install --save source-map-explorer
 ```
 
-Alternatively you may use `yarn`:
+或者用 `yarn`:
 
 ```sh
 yarn add source-map-explorer
@@ -1897,19 +1897,19 @@ options of the `SWPreachePlugin` [configuration](../config/webpack.config.prod.j
   "start_url": ".",
 ```
 
-### Building for Relative Paths
+### 建立相对路径
 
-By default, Create React App produces a build assuming your app is hosted at the server root.<br>
+默认情况下，Create React App会生成一个构建，假设您的应用程序托管在服务器根目录下<br>
 To override this, specify the `homepage` in your `package.json`, 举个栗子:
 
 ```js
   "homepage": "http://mywebsite.com/relativepath",
 ```
 
-This will let Create React App correctly infer the root path to use in the generated HTML file.
+This will let Create React App correctly infer the root path to use 在生成的HTML 文件中.
 
 **Note**: If you are using `react-router@^4`, you can root `<Link>`s using the `basename` prop on any `<Router>`.<br>
-More information [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
+更多请参考 [here](https://reacttraining.com/react-router/web/api/BrowserRouter/basename-string).<br>
 <br>
 举个栗子:
 ```js
@@ -2041,7 +2041,7 @@ To publish it at [https://myusername.github.io/my-app](https://myusername.github
 npm install --save gh-pages
 ```
 
-Alternatively you may use `yarn`:
+或者用 `yarn`:
 
 ```sh
 yarn add gh-pages
@@ -2212,19 +2212,19 @@ Note that in order to support routers that use HTML5 `pushState` API, you may wa
 
 ## 高级配置
 
-You can adjust various development and production settings by setting environment variables in your shell or with [.env](#adding-development-environment-variables-in-env).
+您可以通过在 shell 或使用 [.env](#adding-development-environment-variables-in-env) 设置环境变量, 来调整各种开发和生产配置。
 
 Variable | Development | Production | Usage
 :--- | :---: | :---: | :---
 BROWSER | :white_check_mark: | :x: | By default, Create React App will open the default system browser, favoring Chrome on macOS. Specify a [browser](https://github.com/sindresorhus/opn#app) to override this behavior, or set it to `none` to disable it completely. If you need to customize the way the browser is launched, you can specify a node script instead. Any arguments passed to `npm start` will also be passed to this script, and the url where your app is served will be the last argument. Your script's file name must have the `.js` extension.
-HOST | :white_check_mark: | :x: | By default, the development web server binds to `localhost`. You may use this variable to specify a different host.
-PORT | :white_check_mark: | :x: | By default, the development web server will attempt to listen on port 3000 or prompt you to attempt the next available port. You may use this variable to specify a different port.
-HTTPS | :white_check_mark: | :x: | When set to `true`, Create React App will run the development server in `https` mode.
-PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes your application is hosted at the serving web server's root or a subpath as specified in [`package.json` (`homepage`)](#building-for-relative-paths). Normally, Create React App ignores the hostname. You may use this variable to force assets to be referenced verbatim to the url you provide (hostname included). This may be particularly useful when using a CDN to host your application.
+HOST | :white_check_mark: | :x: | 默认 `localhost`, 可以将此变量指向其他host。
+PORT | :white_check_mark: | :x: | 默认端口号 3000 (若已被占用,则自动加1, 直到可用为止). 可以将此变量指向其他端口.
+HTTPS | :white_check_mark: | :x: | 设置为 `true` 时，Create React App将以 `https` 模式运行开发服务器.
+PUBLIC_URL | :x: | :white_check_mark: | Create React App assumes Create React App假定您的应用程序托管在服务Web服务器的根目录或 [`package.json` (`homepage`)](#building-for-relative-paths) 中指定的子路径。 通常，Create React App会忽略主机名。 您可以使用此变量来强制从您提供的URL（包括主机名）引用资源。 当使用CDN托管您的APP时，这可能特别有用。
 CI | :large_orange_diamond: | :white_check_mark: | When set to `true`, Create React App treats warnings as failures in the build. It also makes the test runner non-watching. Most CIs set this flag by default.
 REACT_EDITOR | :white_check_mark: | :x: | When an app crashes in development, you will see an error overlay with clickable stack trace. When you click on it, Create React App will try to determine the editor you are using based on currently running processes, and open the relevant source file. You can [send a pull request to detect your editor of choice](https://github.com/facebookincubator/create-react-app/issues/2636). Setting this environment variable overrides the automatic detection. If you do it, make sure your systems [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) environment variable points to your editor’s bin folder. You can also set it to `none` to disable it completely.
 CHOKIDAR_USEPOLLING | :white_check_mark: | :x: | When set to `true`, the watcher runs in polling mode, as necessary inside a VM. Use this option if `npm start` isn't detecting changes.
-GENERATE_SOURCEMAP | :x: | :white_check_mark: | When set to `false`, source maps are not generated for a production build. This solves OOM issues on some smaller machines.
+GENERATE_SOURCEMAP | :x: | :white_check_mark: | 设置为 `false` 时，生产构建不会生成sourcemap。 这解决了一些小型机器上的OOM问题。
 NODE_PATH | :white_check_mark: |  :white_check_mark: | Same as [`NODE_PATH` in Node.js](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders), but only relative folders are allowed. Can be handy for emulating a monorepo setup by setting `NODE_PATH=src`.
 
 ## 问题解决
