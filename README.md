@@ -935,8 +935,7 @@ You can find the companion GitHub repository [here](https://github.com/fullstack
 
 >Note: 这个feature需要 `react-scripts@0.2.3` 及以上版本.
 
-通常将前端的 React app 和后端接口使用同样的 host and port.<br>
-例如, app部署完后, 生产配置可能如下所示:
+如果前端的 React app 和后端接口使用同一个 host 和 port. 例如 app部署完后, 生产配置如下所示:
 
 ```
 /             - static server returns index.html with React app
@@ -944,15 +943,17 @@ You can find the companion GitHub repository [here](https://github.com/fullstack
 /api/todos    - server handles any /api/* requests using the backend implementation
 ```
 
-这种配置 **不是** 必须的. 当然如果你这样配置的话, 用 `fetch('/api/todos')` 这种方式写请求就会非常方便了, 而不用担心在开发环境中重定向到其他的host或者port上.
+如果你这样配置的话, 用 `fetch('/api/todos')` 这种方式写请求就会非常方便了, 而不用担心在开发环境中重定向到其他的host或者port上. 反之,如果static server和API server用的是不同的host或port, 就需要配置代理了. 代理的作用如下图所示:
+
+![proxy](https://www.fullstackreact.com/assets/images/articles/cra-with-server/flow-diagram-2.png)
 
 在 `package.json` 中添加 `proxy` 字段, 以告诉开发服务器将所有未知请求代理到开发环境中的API服务器. 具体如下:
 
 ```js
-  "proxy": "http://localhost:4000",
+  "proxy": "http://localhost:3001",
 ```
 
-如此, 当你在开发环境中 `fetch('/api/todos')` 时, development server 就不会把它当做静态资源, 然后转发到 `http://localhost:4000/api/todos`. development server **仅仅** 把 `Accept` header 中没有`text/html` 的请求转发给给 proxy server.
+如此, 当你在开发环境中 `fetch('/api/todos')` 时, development server 就不会把它当做静态资源, 然后转发到 `http://localhost:3001`/api/todos`. development server **仅仅** 把 `Accept` header 中没有`text/html` 的请求转发给给 proxy server.
 
 以上可以方便的在开发环境中避免类似下面的 [跨域(CORS) 问题](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations):
 
@@ -2226,7 +2227,7 @@ CHOKIDAR_USEPOLLING | :white_check_mark: | :x: | When set to `true`, the watcher
 GENERATE_SOURCEMAP | :x: | :white_check_mark: | When set to `false`, source maps are not generated for a production build. This solves OOM issues on some smaller machines.
 NODE_PATH | :white_check_mark: |  :white_check_mark: | Same as [`NODE_PATH` in Node.js](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders), but only relative folders are allowed. Can be handy for emulating a monorepo setup by setting `NODE_PATH=src`.
 
-## Troubleshooting
+## 问题解决
 
 ### `npm start` doesn’t detect changes
 
