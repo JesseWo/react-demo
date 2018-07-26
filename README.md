@@ -402,7 +402,7 @@ class Button extends Component {
 }
 ```
 
-**对于React而言非必须**, 但是很多人在用 [好处?](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). 当然以上**基于webpack**, 如果你想换其他构建工具就不好办了.
+**对于React而言非必须**, 但是很多人在用 [好处?](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). 当然以上**基于webpack**, 如果你想换其他构建工具就不好办了.
 
 在开发中，通过这种方式表达依赖关系，可以实现热加载; 在生产中，所有 `.CSS` 文件在构建过程中, 会被组合成一个压缩后的.css文件。
 

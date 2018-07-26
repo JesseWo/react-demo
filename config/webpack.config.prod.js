@@ -194,7 +194,7 @@ module.exports = {
                   ],
                 },
               },
-              require.resolve('sass-loader'),
+              // require.resolve('sass-loader'),
             ]
             // Note: this won't work without `new MiniCssExtractPlugin()` in `plugins`.
           },
