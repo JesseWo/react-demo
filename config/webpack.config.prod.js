@@ -18,9 +18,6 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
-// Some apps do not use client-side routing with pushState.
-// For these, "homepage" can be set to "." to enable relative asset paths.
-const shouldUseRelativeAssetPaths = publicPath === './';
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
@@ -43,6 +40,8 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
 module.exports = {
+  // Chosen mode tells webpack to use its built-in optimizations accordingly.
+  mode: "production",
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -331,6 +330,7 @@ module.exports = {
   },
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
+  // 参考 https://www.webpackjs.com/configuration/node/
   node: {
     dgram: 'empty',
     fs: 'empty',
