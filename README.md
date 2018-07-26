@@ -402,15 +402,13 @@ class Button extends Component {
 }
 ```
 
-**对于React而言非必须**, 但是很多人在用 [好处是什么?](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). 当然以上依赖于webpack, 如果你想换其他构建工具就不好办了.
+**对于React而言非必须**, 但是很多人在用 [好处?](https://medium.com/seek-ui-engineering/block-element-modifying-your-javascript-components-d7f99fcab52b). 当然以上**基于webpack**, 如果你想换其他构建工具就不好办了.
 
-In development, expressing dependencies this way allows your styles to be reloaded on the fly as you edit them. In production, all CSS files will be concatenated into a single minified `.css` file in the build output.
-
-If you are concerned about using Webpack-specific semantics, you can put all your CSS right into `src/index.css`. It would still be imported from `src/index.js`, but you could always remove that import if you later migrate to a different build tool.
+在开发中，通过这种方式表达依赖关系，可以实现热加载; 在生产中，所有 `.CSS` 文件在构建过程中, 会被组合成一个压缩后的.css文件。
 
 ## Post-Processing CSS
 
-通过[Autoprefixer](https://github.com/postcss/autoprefixer) 压缩 CSS 并且 自动添加 vendor prefixes (供应商前缀)
+通过 [Autoprefixer](https://github.com/postcss/autoprefixer) 压缩 CSS 并且 自动添加 vendor prefixes (供应商前缀)
 
 举个栗子:
 

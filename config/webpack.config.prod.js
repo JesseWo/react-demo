@@ -4,7 +4,6 @@ const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('./webpackplugins/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
@@ -12,8 +11,9 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -38,15 +38,6 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
-
-// ExtractTextPlugin expects the build output to be flat.
-// (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
-// However, our output is structured with css, js and media folders.
-// To have this structure working with relative paths, we have to use custom options.
-const extractTextPluginOptions = shouldUseRelativeAssetPaths
-  ? // Making sure that the publicPath goes back to to build folder.
-  { publicPath: Array(cssFilename.split('/').length).join('../') }
-  : {};
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -122,7 +113,7 @@ module.exports = {
           {
             options: {
               formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
+              eslintPath: require.resolve('eslint'),//使用内部的 require() 机制查询模块的位置, 此操作只返回解析后的文件名，不会加载该模块。
 
             },
             loader: require.resolve('eslint-loader'),
@@ -137,6 +128,7 @@ module.exports = {
         oneOf: [
           // "url" loader works just like "file" loader but it also embeds
           // assets smaller than specified size as data URLs to avoid requests.
+          //图片
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),
@@ -145,7 +137,7 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // Process JS with Babel.
+          //js jsx: Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
@@ -167,53 +159,45 @@ module.exports = {
           // tags. If you use code splitting, however, any async bundles will still
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
-          // {
-          //   test: /\.css$/,
-          //   loader: ExtractTextPlugin.extract(
-          //     Object.assign(
-          //       {
-          //         fallback: {
-          //           loader: require.resolve('style-loader'),
-          //           options: {
-          //             hmr: false,
-          //           },
-          //         },
-          //         use: [
-          //           {
-          //             loader: require.resolve('css-loader'),
-          //             options: {
-          //               importLoaders: 1,
-          //               minimize: true,
-          //               sourceMap: shouldUseSourceMap,
-          //             },
-          //           },
-          //           {
-          //             loader: require.resolve('postcss-loader'),
-          //             options: {
-          //               // Necessary for external CSS imports to work
-          //               // https://github.com/facebookincubator/create-react-app/issues/2677
-          //               ident: 'postcss',
-          //               plugins: () => [
-          //                 require('postcss-flexbugs-fixes'),
-          //                 autoprefixer({
-          //                   browsers: [
-          //                     '>1%',
-          //                     'last 4 versions',
-          //                     'Firefox ESR',
-          //                     'not ie < 9', // React doesn't support IE8 anyway
-          //                   ],
-          //                   flexbox: 'no-2009',
-          //                 }),
-          //               ],
-          //             },
-          //           },
-          //         ],
-          //       },
-          //       extractTextPluginOptions
-          //     )
-          //   ),
-          //   // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-          // },
+          //css
+          //用mini-css-extract-plugin 取代 ExtractTextPlugin (deprecate)
+          //具体参见 https://github.com/webpack-contrib/mini-css-extract-plugin
+          {
+            test: /\.css$/,
+            use: [
+              MiniCssExtractPlugin.loader,
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  minimize: true,
+                  sourceMap: shouldUseSourceMap,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+              require.resolve('sass-loader'),
+            ]
+            // Note: this won't work without `new MiniCssExtractPlugin()` in `plugins`.
+          },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
@@ -236,6 +220,12 @@ module.exports = {
     ],
   },
   plugins: [
+    //缓存清理: removes all files in 'build' folder
+    new CleanWebpackPlugin('build/*.*', {
+      root: paths.appDirectory,
+      verbose: true,
+      dry: false
+    }),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -268,10 +258,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: cssFilename,
     }),
-    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    // new ExtractTextPlugin({
-    //   filename: cssFilename,
-    // }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
