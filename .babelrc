@@ -1,5 +1,24 @@
 {
     "presets": [
         "react-app"
+    ],
+    "plugins": [
+        [
+            "import",
+            {
+                "libraryName": "antd",
+                "libraryDirectory": "lib",
+                "style": true
+            },
+            "ant"
+        ],
+        [
+            "import",
+            {
+                "libraryName": "ant-mobile",
+                "style": true
+            },
+            "ant-mobile"
+        ]
     ]
 }
