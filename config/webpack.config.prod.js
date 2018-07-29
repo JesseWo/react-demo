@@ -150,11 +150,13 @@ module.exports = merge.strategy({
             test: /\.css$/,
             include: [/node_modules/],
             use: [
-              require.resolve('style-loader'),
+              MiniCssExtractPlugin.loader,
               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  minimize: true,
+                  sourceMap: shouldUseSourceMap,
                 },
               },
               {
@@ -177,7 +179,9 @@ module.exports = merge.strategy({
                   ],
                 },
               },
-            ],
+              // require.resolve('sass-loader'),
+            ]
+            // Note: this won't work without `new MiniCssExtractPlugin()` in `plugins`.
           },
           {
             test: /\.less$/,
