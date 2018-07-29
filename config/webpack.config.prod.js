@@ -85,6 +85,12 @@ module.exports = merge.strategy({
             options: {
 
               compact: true,
+              plugins: [
+                // babel-plugin-import相关配置, https://github.com/ant-design/babel-plugin-import#usage
+                // 注意大坑: 此处style必须为css!!!
+                ['import', { libraryName: 'antd', style: 'css' }],
+                ['import', { libraryName: 'ant-mobile', style: 'css' }],
+              ]
             },
           },
           // The notation here is somewhat confusing.
@@ -104,6 +110,7 @@ module.exports = merge.strategy({
           //具体参见 https://github.com/webpack-contrib/mini-css-extract-plugin
           {
             test: /\.css$/,
+            exclude: [/node_modules/],
             use: [
               MiniCssExtractPlugin.loader,
               {
@@ -112,6 +119,7 @@ module.exports = merge.strategy({
                   importLoaders: 1,
                   minimize: true,
                   sourceMap: shouldUseSourceMap,
+                  modules: true, // 指定启用css modules
                 },
               },
               {
@@ -137,6 +145,56 @@ module.exports = merge.strategy({
               // require.resolve('sass-loader'),
             ]
             // Note: this won't work without `new MiniCssExtractPlugin()` in `plugins`.
+          },
+          {
+            test: /\.css$/,
+            include: [/node_modules/],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            test: /\.less$/,
+            exclude: [/node_modules/],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  modules: true,
+                  localIndexName: "[name]__[local]___[hash:base64:5]"
+                },
+              },
+              {
+                loader: require.resolve('less-loader'), // compiles Less to CSS
+              },
+            ],
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.

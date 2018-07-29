@@ -78,6 +78,12 @@ module.exports = merge.strategy({
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
               cacheDirectory: true,
+              plugins: [
+                // babel-plugin-import相关配置, https://github.com/ant-design/babel-plugin-import#usage
+                // 注意大坑: 此处style必须为css!!!
+                ['import', { libraryName: 'antd', style: 'css' }],
+                ['import', { libraryName: 'ant-mobile', style: 'css' }],
+              ]
             },
           },
           // "postcss" loader applies autoprefixer to our CSS.
@@ -85,8 +91,46 @@ module.exports = merge.strategy({
           // "style" loader turns CSS into JS modules that inject <style> tags.
           // In production, we use a plugin to extract that CSS to a file, but
           // in development "style" loader enables hot editing of CSS.
+          //解决css-modules 和 antd冲突的问题: 对src 和 node_modules中的CSS分别进行配置
+          //src中的css
           {
             test: /\.css$/,
+            exclude: [/node_modules/],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: true, // 指定启用css modules
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+            ],
+          },
+          //node_modules中的css
+          {
+            test: /\.css$/,
+            include: [/node_modules/],
             use: [
               require.resolve('style-loader'),
               {
@@ -114,6 +158,23 @@ module.exports = merge.strategy({
                     }),
                   ],
                 },
+              },
+            ],
+          },
+          {
+            test: /\.less$/,
+            exclude: [/node_modules/],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  modules: true,
+                  localIndexName: "[name]__[local]___[hash:base64:5]"
+                },
+              },
+              {
+                loader: require.resolve('less-loader'), // compiles Less to CSS
               },
             ],
           },
