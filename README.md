@@ -951,7 +951,7 @@ You can find the companion GitHub repository [here](https://github.com/fullstack
   "proxy": "http://localhost:3001",
 ```
 
-如此, 当你在开发环境中 `fetch('/api/todos')` 时, development server 就不会把它当做静态资源, 然后转发到 `http://localhost:3001`/api/todos`. development server **仅仅** 把 `Accept` header 中没有`text/html` 的请求转发给给 proxy server.
+这样, 当你在dev.环境中 `fetch('/api/todos')` 时, dev server 就会转发到 `http://localhost:3001/api/todos`, 而不是把它当做静态资源处理. development server **仅仅** 把 `Accept header 中没有`text/html` 的请求转发给给 proxy server.
 
 以上可以方便的在开发环境中避免类似下面的 [跨域(CORS) 问题](http://stackoverflow.com/questions/21854516/understanding-ajax-cors-and-security-considerations):
 
