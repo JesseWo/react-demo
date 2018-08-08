@@ -2,6 +2,8 @@
 
 以下内容翻译自 create-react-app [README.MD](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md), 同时精简啰嗦的叙述.
 
+[React技术栈个人总结](https://github.com/JesseWo/NOTBOOK/blob/master/%E5%89%8D%E7%AB%AF/React.md)
+
 ## 目录
 
 - [更新到最新版本](#更新到最新版本)
