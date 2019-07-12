@@ -12,6 +12,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.config.common.js');
+const FileListPlugin = require('./webpackplugins/FileListPlugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -71,27 +72,40 @@ module.exports = merge.strategy({
           //图片
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            loader: require.resolve('url-loader'),
-            options: {
-              limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+            use: {
+              loader: require.resolve('url-loader'),
+              options: {
+                limit: 10000,
+                name: 'static/media/[name].[hash:8].[ext]',
+              },
             },
           },
           //js jsx: Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
+            use: [
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
 
-              compact: true,
-              plugins: [
-                // babel-plugin-import相关配置, https://github.com/ant-design/babel-plugin-import#usage
-                // 注意大坑: 此处style必须为css!!!
-                ['import', { libraryName: 'antd', style: 'css' }],
-                ['import', { libraryName: 'ant-mobile', style: 'css' }],
-              ]
-            },
+                  compact: true,
+                  plugins: [
+                    // babel-plugin-import相关配置, https://github.com/ant-design/babel-plugin-import#usage
+                    // 注意大坑: 此处style必须为css!!!
+                    ['import', { libraryName: 'antd', style: 'css' }],
+                    ['import', { libraryName: 'ant-mobile', style: 'css' }],
+                  ]
+                },
+              },
+              {
+                loader: require.resolve('text-replacement-loader'),
+                options: {
+                  test: /\$VEST\$/g,
+                  replacement: 'vest/'
+                }
+              }
+            ]
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
@@ -131,6 +145,7 @@ module.exports = merge.strategy({
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
+                      //https://github.com/browserslist/browserslist#queries
                       browsers: [
                         '>1%',
                         'last 4 versions',
@@ -254,6 +269,12 @@ module.exports = merge.strategy({
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
+      /* map: (value, key, obj) => {
+        if (value.isAsset) {
+          console.log(value);
+        }
+        return value;
+      } */
     }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
@@ -285,6 +306,8 @@ module.exports = merge.strategy({
       // Don't precache sourcemaps (they're large) and build asset manifest:
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
     }),
+
+    new FileListPlugin(),
   ],
   optimization: {
     minimizer: [

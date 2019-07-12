@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import styles from './App.css';
 import { Button, Avatar } from 'antd';
+import testImg from './assets/img/$VEST$icon-success.png';
+import testImg1 from './assets/img/icon-success.png';
 
 class App extends Component {
   render() {
@@ -16,6 +18,7 @@ class App extends Component {
         </p>
         <Avatar>USER</Avatar>
         <Button type="primary">Button</Button>
+        <img src={testImg} alt='test' />
       </div>
     );
   }

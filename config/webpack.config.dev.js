@@ -71,20 +71,31 @@ module.exports = merge.strategy({
           {
             test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
+            use: [
+              {
+                loader: require.resolve('babel-loader'),
+                options: {
 
-              // This is a feature of `babel-loader` for webpack (not Babel itself).
-              // It enables caching results in ./node_modules/.cache/babel-loader/
-              // directory for faster rebuilds.
-              cacheDirectory: true,
-              plugins: [
-                // babel-plugin-import相关配置, https://github.com/ant-design/babel-plugin-import#usage
-                // 注意大坑: 此处style必须为css!!!
-                ['import', { libraryName: 'antd', style: 'css' }],
-                ['import', { libraryName: 'ant-mobile', style: 'css' }],
-              ]
-            },
+                  // This is a feature of `babel-loader` for webpack (not Babel itself).
+                  // It enables caching results in ./node_modules/.cache/babel-loader/
+                  // directory for faster rebuilds.
+                  cacheDirectory: true,
+                  plugins: [
+                    // babel-plugin-import相关配置, https://github.com/ant-design/babel-plugin-import#usage
+                    // 注意大坑: 此处style必须为css!!!
+                    ['import', { libraryName: 'antd', style: 'css' }],
+                    ['import', { libraryName: 'ant-mobile', style: 'css' }],
+                  ]
+                },
+              },
+              {
+                loader: require.resolve('text-replacement-loader'),
+                options: {
+                  test: /\$VEST\$/g,
+                  replacement: 'vest/'
+                }
+              }
+            ]
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
